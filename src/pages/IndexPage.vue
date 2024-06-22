@@ -1,5 +1,6 @@
 <template>
   <h1>Index Page Melo</h1>
+  <router-link to="/about">About</router-link>
   <q-page class="row items-center justify-evenly">
     <example-component
       title="Example component"

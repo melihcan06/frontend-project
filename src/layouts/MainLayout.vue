@@ -1,8 +1,6 @@
 <template>
-  <h1>Main Layout Melo</h1>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <h2>melo header</h2>
       <q-toolbar>
         <q-btn
           flat
@@ -32,6 +30,7 @@
     </q-drawer>
 
     <q-page-container>
+      <h1>Main Layout Melo</h1>
       <router-view />
     </q-page-container>
   </q-layout>
