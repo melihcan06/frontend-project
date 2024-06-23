@@ -1,5 +1,11 @@
+import type { IUser } from 'src/models/IUser';
 class AuthService {
   getUser() {
+    const currentUser: IUser = {
+      id: '1',
+      name: 'Melih Can',
+    };
+    return currentUser;
     throw new Error('Method not implemented.');
   }
   isAuth() {
