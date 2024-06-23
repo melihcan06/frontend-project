@@ -12,16 +12,32 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { useAuthStore } from 'src/stores/authStore';
+import { onMounted, reactive } from 'vue';
 
 const loginProp = reactive({
   username: '',
   password: '',
 });
 
-const execLogin = async () => {
-  console.log('loginn');
-};
+const authStore = useAuthStore();
+
+async function execLogin() {
+  const isAuth = await authStore.login(loginProp.username, loginProp.password);
+  if (isAuth) {
+    location.href = '/';
+  }
+}
+
+async function execLogout() {
+  await authStore.logout();
+}
+
+onMounted(() => {
+  //if (doLogout.value) {
+  execLogout();
+  //}
+});
 </script>
 
 <style scoped></style>
