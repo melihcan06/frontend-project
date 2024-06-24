@@ -35,11 +35,14 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  Router.beforeEach((to) => {
+  Router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     debugger;
     if (!authStore.isAuth && to.path != '/login') {
-      location.href = '/#/login';
+      //location.href = '/#/login';
+      next('/login');
+    } else {
+      next();
     }
   });
 
