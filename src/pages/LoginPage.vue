@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { useAuthStore } from 'src/stores/authStore';
 import { onMounted, reactive } from 'vue';
+//import { useRouter } from 'vue-router';
 
 const loginProp = reactive({
   username: '',
@@ -21,11 +22,13 @@ const loginProp = reactive({
 });
 
 const authStore = useAuthStore();
+//const router = useRouter();
 
 async function execLogin() {
   const isAuth = await authStore.login(loginProp.username, loginProp.password);
   if (isAuth) {
     location.href = '/';
+    //router.push('/'); //logine tekrar gelip pathten login kısmını silip enter a basınca doğru şifreyle bile girsen açılmıyor
   }
 }
 
@@ -35,6 +38,7 @@ async function execLogout() {
 
 onMounted(() => {
   //if (doLogout.value) {
+  console.log('sıfırlandı');
   execLogout();
   //}
 });
