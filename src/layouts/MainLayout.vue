@@ -31,6 +31,7 @@
 
     <q-page-container>
       <h1>Main Layout Melo</h1>
+      <router-link to="/login">Logout</router-link>
       <router-view />
     </q-page-container>
   </q-layout>
