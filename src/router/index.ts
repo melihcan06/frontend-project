@@ -7,7 +7,8 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
-import { useAuthStore } from 'src/stores/authStore';
+//import { useAuthStore } from 'src/stores/authStore';
+import authService from 'src/services/AuthService';
 
 /*
  * If not building with SSR mode, you can
@@ -36,9 +37,11 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    const authStore = useAuthStore();
+    //const authStore = useAuthStore();
+    //const isAuth = authStore.isAuth;
+    const isAuth = authService.isAuth();
     debugger;
-    if (!authStore.isAuth && to.path != '/login') {
+    if (!isAuth && to.path != '/login') {
       //location.href = '/#/login';
       next('/login');
     } else {
