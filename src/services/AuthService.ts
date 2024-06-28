@@ -1,42 +1,61 @@
+import axios from 'axios';
 import Consts from 'src/models/Consts';
 import type { IUser } from 'src/models/IUser';
 
 class AuthService {
-  login(username: string, password: string): Promise<boolean> {
+  async execLogin(username: string, password: string): Promise<IUser | null> {
+    const url = 'http://localhost:8080/api/getUser/';
+    await axios
+      .post(url, {
+        username: username,
+        password: password,
+      })
+      .then((resp) => {
+        return resp;
+      });
+    return null;
+  }
+
+  async login(username: string, password: string): Promise<boolean> {
     console.log(username);
     console.log(password);
+
     //TODO: TEST şimdilik normalse servise git session bilgilerini al gel
-    if (username === 'melih' && password === '12') {
+    /*if (username === 'melih' && password === '12') {
       const currentUser: IUser = {
         id: '1',
         name: 'Melih Can',
-      };
-
-      localStorage.setItem(
+      };*/
+    debugger;
+    const currentUser = await this.execLogin(username, password);
+    debugger;
+    if (currentUser) {
+      //localStorage
+      sessionStorage.setItem(
         Consts.StorageKeys.USER,
         JSON.stringify(currentUser)
       );
-      localStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(true));
+      sessionStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(true));
       return Promise.resolve(true);
     }
-    localStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(false));
+    sessionStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(false));
     return Promise.resolve(false);
   }
 
   isAuth(): boolean {
     return JSON.parse(
-      localStorage.getItem(Consts.StorageKeys.IS_AUTH) || 'false'
+      sessionStorage.getItem(Consts.StorageKeys.IS_AUTH) || 'false'
     );
   }
 
   logout(): Promise<boolean> {
-    localStorage.removeItem(Consts.StorageKeys.USER);
-    localStorage.removeItem(Consts.StorageKeys.IS_AUTH);
+    sessionStorage.removeItem(Consts.StorageKeys.USER);
+    sessionStorage.removeItem(Consts.StorageKeys.IS_AUTH);
     return Promise.resolve(true);
   }
 
   getUser(): Promise<IUser | null> {
-    const user = localStorage.getItem(Consts.StorageKeys.USER);
+    const user = sessionStorage.getItem(Consts.StorageKeys.USER);
     if (user) {
       return JSON.parse(user);
     } else {
