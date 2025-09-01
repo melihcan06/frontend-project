@@ -20,15 +20,19 @@ class AuthService {
     console.log(username);
     console.log(password);
 
-    //TODO: TEST şimdilik normalse servise git session bilgilerini al gel
-    /*if (username === 'melih' && password === '12') {
-      const currentUser: IUser = {
-        id: '1',
-        name: 'Melih Can',
-      };*/
+    //TODO: TEST
+    //if (username === 'melih' && password === '12') {
+    const currentUser: IUser = {
+      id: '1',
+      name: 'Melih Can',
+    };
+    //}
+
     debugger;
-    const currentUser = await this.execLogin(username, password);
+    //TODO: TEST
+    //const currentUser = await this.execLogin(username, password);
     debugger;
+
     if (currentUser) {
       //localStorage
       sessionStorage.setItem(
@@ -37,9 +41,10 @@ class AuthService {
       );
       sessionStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(true));
       return Promise.resolve(true);
+    } else {
+      sessionStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(false));
+      return Promise.resolve(false);
     }
-    sessionStorage.setItem(Consts.StorageKeys.IS_AUTH, JSON.stringify(false));
-    return Promise.resolve(false);
   }
 
   isAuth(): boolean {
