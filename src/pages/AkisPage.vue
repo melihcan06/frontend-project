@@ -4,19 +4,57 @@
     <q-btn>Akış Oluştur</q-btn>
   </div>
 
+  <div class="q-pa-md">
+    <div class="cursor-pointer">
+      {{ label }}
+      <q-popup-edit v-model="label" auto-save v-slot="scope">
+        <q-select
+          standout
+          :options="optionsAkisAdimTip"
+          label="Adım Türü"
+          v-model="scope.value"
+          dense
+          autofocus
+          counter
+          @keyup.enter="scope.set"
+        />
+        <q-select
+          standout
+          v-model="akisAdimTip"
+          :options="optionsAkisAdimTip"
+          label="Adım Türü"
+        />
+        <q-select
+          standout
+          v-model="atanacakKullanicilar"
+          :options="optionsAtanacakKullanicilar"
+          label="Kişi / Kişiler"
+          multiple
+          behavior="dialog"
+        />
+        <q-select
+          standout
+          v-model="akisAdimHedefTip"
+          :options="optionsAkisAdimHedefTip"
+          label="İş Atama Şekli"
+        />
+      </q-popup-edit>
+    </div>
+  </div>
+
   <div class="q-pa-md" style="max-width: 300px">
     <div class="q-gutter-md">
       <q-select
         standout
         v-model="akisAdimTip"
         :options="optionsAkisAdimTip"
-        label="Adım Tipi"
+        label="Adım Türü"
       />
       <q-select
         standout
         v-model="atanacakKullanicilar"
         :options="optionsAtanacakKullanicilar"
-        label="Kişi/Kişiler"
+        label="Kişi / Kişiler"
         multiple
         behavior="dialog"
       />
@@ -25,7 +63,7 @@
         standout
         v-model="akisAdimHedefTip"
         :options="optionsAkisAdimHedefTip"
-        label="Adım Hedef Tipi"
+        label="İş Atama Şekli"
       />
     </div>
   </div>
@@ -67,6 +105,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+
+const label = ref('Aç');
 
 // const kisiHavuzu = ref(null);
 const akisAdimTip = ref(null);
