@@ -12,7 +12,15 @@
         :options="optionsAkisAdimTip"
         label="Adım Tipi"
       />
-      <!-- <q-input v-model="kisiHavuzu" type="text" label="Kişi Havuzu" /> -->
+      <q-select
+        standout
+        v-model="atanacakKullanicilar"
+        :options="optionsAtanacakKullanicilar"
+        label="Kişi/Kişiler"
+        multiple
+        behavior="dialog"
+      />
+      <!-- <q-input v-model="kisiHavuzu" type="text" label="Kişi Havuzu Kod ile" /> -->
       <q-select
         standout
         v-model="akisAdimHedefTip"
@@ -21,6 +29,7 @@
       />
     </div>
   </div>
+
   <!-- <div class="q-pa-md">
     <div class="q-gutter-md row items-start">
       <q-date v-model="date" minimal today-btn />
@@ -78,4 +87,13 @@ const updateProxyAdimHedefTipTarih = () => {
 const selectAdimHedefTipTarih = () => {
   adimHedefTipTarih.value = proxyAdimHedefTipTarih.value;
 };
+
+const atanacakKullanicilar = ref(null);
+const optionsAtanacakKullanicilar = [
+  'Ahmet Talha Çankal',
+  'Erkan Feyyaz Yerdurmaz',
+  'İbrahim Caner Karataş',
+  'Mehmet Talha Kara',
+  'Melih Can Kılıç',
+];
 </script>
