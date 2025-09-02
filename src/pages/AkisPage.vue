@@ -8,9 +8,16 @@
     <div class="q-gutter-md">
       <q-select
         standout
-        v-model="modelAdimTipi"
-        :options="optionsAdimTipi"
+        v-model="modelAkisAdimTip"
+        :options="optionsAkisAdimTip"
         label="Adım Tipi"
+      />
+      <!-- <q-input v-model="modelKisiHavuzu" type="text" label="Kişi Havuzu" /> -->
+      <q-select
+        standout
+        v-model="modelAkisAdimHedefTip"
+        :options="optionsAkisAdimHedefTip"
+        label="Adım Hedef Tipi"
       />
     </div>
   </div>
@@ -19,6 +26,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const modelAdimTipi = ref(null);
-const optionsAdimTipi = ['Kişi', 'Rol', 'Birim', 'Üst Birim', 'Generic'];
+// const modelKisiHavuzu = ref(null);
+const modelAkisAdimTip = ref(null);
+const optionsAkisAdimTip = ['Kişi', 'Rol', 'Birim'];
+const modelAkisAdimHedefTip = ref(null);
+const optionsAkisAdimHedefTip = [
+  'Tüm işlere bakarak ata',
+  'Bugünün işlerine bakarak ata',
+  'Özel bir tarihe bakarak ata',
+  'Birime eklenen son kullanıcının eklenme tarihine bakarak ata',
+];
 </script>
