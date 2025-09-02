@@ -1,5 +1,7 @@
 <template>
+  test1
   <AkisAdim></AkisAdim>
+  test2
   <q-page padding>
     <div ref="playground" class="playground" @dragover.prevent @drop="onDrop">
       <q-btn
