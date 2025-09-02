@@ -1,4 +1,5 @@
 <template>
+  <AkisAdim></AkisAdim>
   <q-page padding>
     <div ref="playground" class="playground" @dragover.prevent @drop="onDrop">
       <q-btn
@@ -16,22 +17,27 @@
   </q-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import AkisAdim from 'components/AkisAdim.vue';
 
-const playground = ref(null);
+const playground = ref<HTMLDivElement | null>(null);
 const position = ref({ x: 50, y: 50 }); // Başlangıç konumu
 const offset = ref({ x: 0, y: 0 });
 
-const onDragStart = (event) => {
-  const rect = event.target.getBoundingClientRect();
+const onDragStart = (event: DragEvent) => {
+  if (!event.target) return;
+
+  const rect = (event.target as HTMLElement).getBoundingClientRect();
   offset.value = {
     x: event.clientX - rect.left,
     y: event.clientY - rect.top,
   };
 };
 
-const onDrop = (event) => {
+const onDrop = (event: DragEvent) => {
+  if (!playground.value) return;
+
   const containerRect = playground.value.getBoundingClientRect();
 
   position.value = {
