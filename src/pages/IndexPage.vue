@@ -3,6 +3,8 @@
   <router-link to="/about">About</router-link>
   <br />
   <router-link to="/akis">Akış</router-link>
+  <br />
+  <router-link to="/test">Test</router-link>
   <q-page class="row items-center justify-evenly">
     <example-component
       title="Example component"
