@@ -15,7 +15,7 @@
     <q-page padding>
       <div class="q-pa-md">
         <div
-          ref="playground"
+          :ref="PositionsService().playground"
           class="playground"
           @dragover.prevent
           @drop="PositionsService().onDrop"

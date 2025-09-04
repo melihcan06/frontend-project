@@ -2,7 +2,6 @@ import { IPosition } from 'src/models/IPosition';
 import { ref } from 'vue';
 
 const positions = ref<IPosition[]>();
-const offsets = ref<IPosition[]>();
 const playground = ref<HTMLDivElement | null>(null);
 const position = ref<IPosition>({ x: 0, y: 0 });
 const offset = ref<IPosition>({ x: 0, y: 0 });
@@ -19,6 +18,7 @@ const onDragStart = (event: DragEvent) => {
 };
 
 const onDrop = (event: DragEvent) => {
+  debugger;
   if (!playground.value) return;
 
   const containerRect = playground.value.getBoundingClientRect();
@@ -30,7 +30,15 @@ const onDrop = (event: DragEvent) => {
 };
 
 const PositionsService = () => {
-  return { positions, offsets, onDragStart, onDrop, defaultStartPosition };
+  return {
+    positions,
+    playground,
+    defaultStartPosition,
+    onDragStart,
+    onDrop,
+    offset,
+    position,
+  };
 };
 
 export default PositionsService;
