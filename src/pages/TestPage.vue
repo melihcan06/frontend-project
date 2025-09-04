@@ -15,6 +15,18 @@
         }"
         @dragstart="onDragStart"
       />
+
+      <q-btn
+        label="Sürükle Beni2"
+        color="primary"
+        draggable="true"
+        :style="{
+          position: 'absolute',
+          top: position.y + 'px',
+          left: position.x + 'px',
+        }"
+        @dragstart="onDragStart"
+      />
     </div>
   </q-page>
 </template>
