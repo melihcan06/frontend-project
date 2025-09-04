@@ -26,7 +26,6 @@ const loginProp = reactive({
 const router = useRouter();
 
 async function execLogin() {
-  debugger;
   //const isAuth = await authStore.login(loginProp.username, loginProp.password);
   const isAuth = await authService.login(
     loginProp.username,

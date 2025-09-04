@@ -15,8 +15,8 @@
     <q-page padding>
       <div class="q-pa-md">
         <div
-          :ref="PositionsService().playground"
           class="playground"
+          :ref="PositionsService().playground"
           @dragover.prevent
           @drop="PositionsService().onDrop"
         >
@@ -26,7 +26,9 @@
               :key="id"
               class="col-12 col-md-4"
             >
-              <AkisAdim :id="id" />
+              <div>
+                <AkisAdim :id="id" />
+              </div>
             </div>
           </div>
         </div>
@@ -40,10 +42,12 @@ import AkisAdim from 'src/components/AkisAdim.vue';
 import PositionsService from 'src/services/PositionsService';
 
 function addComponent() {
+  PositionsService().adimlar.value.push(PositionsService().defaultStartAdim);
   PositionsService().positions.value?.push(
     PositionsService().defaultStartPosition
   );
   PositionsService().components.value.push(Date.now()); // benzersiz key için timestamp
+  debugger;
 }
 </script>
 

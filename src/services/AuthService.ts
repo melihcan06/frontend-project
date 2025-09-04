@@ -28,10 +28,8 @@ class AuthService {
     };
     //}
 
-    debugger;
     //TODO: TEST
     //const currentUser = await this.execLogin(username, password);
-    debugger;
 
     if (currentUser) {
       //localStorage

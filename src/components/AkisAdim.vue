@@ -10,6 +10,8 @@
       left: position.x + 'px',
     }"
     @dragstart="PositionsService().onDragStart"
+    @dragover.prevent
+    @drop="PositionsService().onDrop"
   >
     <q-popup-proxy>
       <q-banner>

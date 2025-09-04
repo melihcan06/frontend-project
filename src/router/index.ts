@@ -40,7 +40,6 @@ export default route(function (/* { store, ssrContext } */) {
     //const authStore = useAuthStore();
     //const isAuth = authStore.isAuth;
     const isAuth = authService.isAuth();
-    debugger;
     if (!isAuth && to.path != '/login') {
       //location.href = '/#/login';
       next('/login');
