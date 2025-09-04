@@ -12,17 +12,29 @@
       class="q-mb-md"
     />
 
-    <div class="row q-col-gutter-md">
-      <div v-for="id in components" :key="id" class="col-12 col-md-4">
-        <MyComponent />
+    <q-page padding>
+      <div class="q-pa-md">
+        <div
+          ref="playground"
+          class="playground"
+          @dragover.prevent
+          @drop="PositionsService().onDrop"
+        >
+          <div class="row q-col-gutter-md">
+            <div v-for="id in components" :key="id" class="col-12 col-md-4">
+              <AkisAdim position="{x:10, y:10}" />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </q-page>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import MyComponent from 'src/components/AkisAdim.vue';
+import AkisAdim from 'src/components/AkisAdim.vue';
+import PositionsService from 'src/services/PositionsService';
 
 // component sayısını tutuyoruz
 const components = ref<number[]>([]);
@@ -30,4 +42,16 @@ const components = ref<number[]>([]);
 function addComponent() {
   components.value.push(Date.now()); // benzersiz key için timestamp
 }
+//PositionsService().positions.value.;
+//PositionsService().positions.value?.push;
 </script>
+
+<style scoped>
+.playground {
+  width: 100%;
+  height: 500px;
+  border: 2px dashed #aaa;
+  position: relative;
+  overflow: hidden;
+}
+</style>
