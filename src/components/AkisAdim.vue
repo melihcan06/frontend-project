@@ -74,9 +74,18 @@ const props = defineProps(['id']);
 const id = ref(props.id);
 
 const positions = PositionsService().positions.value;
+var idx = 0;
+if (positions != undefined) {
+  for (var i = 0; i < positions?.length; i++) {
+    if (id.value === positions[i]) {
+      idx = i;
+      break;
+    }
+  }
+}
 const position =
   positions != undefined
-    ? positions[id.value]
+    ? positions[idx]
     : PositionsService().defaultStartPosition;
 
 // const kisiHavuzu = ref(null);

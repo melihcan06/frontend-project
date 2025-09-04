@@ -3,9 +3,9 @@ import { ref } from 'vue';
 
 const positions = ref<IPosition[]>();
 const playground = ref<HTMLDivElement | null>(null);
-const position = ref<IPosition>({ x: 0, y: 0 });
-const offset = ref<IPosition>({ x: 0, y: 0 });
-const defaultStartPosition: IPosition = { x: 0, y: 0 };
+const position = ref<IPosition>({ x: 110, y: 110 });
+const offset = ref<IPosition>({ x: 110, y: 110 });
+const defaultStartPosition: IPosition = { x: 110, y: 110 };
 
 const onDragStart = (event: DragEvent) => {
   if (!event.target) return;
