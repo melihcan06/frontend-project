@@ -22,7 +22,7 @@
         >
           <div class="row q-col-gutter-md">
             <div
-              v-for="id in PositionsService().components"
+              v-for="id in PositionsService().components.value"
               :key="id"
               class="col-12 col-md-4"
             >
