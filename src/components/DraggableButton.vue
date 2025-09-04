@@ -1,15 +1,10 @@
 <template>
   <q-btn
-    push
+    :label="label"
     color="primary"
-    :label="adimLabel"
     draggable="true"
-    :style="{
-      position: 'absolute',
-      top: position.y + 'px',
-      left: position.x + 'px',
-    }"
-    @dragstart="PositionsService().onDragStart"
+    :style="{ position: 'absolute', top: y + 'px', left: x + 'px' }"
+    @dragstart="onDragStart"
   >
     <q-popup-proxy>
       <q-banner>
@@ -67,22 +62,39 @@
 </template>
 
 <script setup lang="ts">
-import PositionsService from 'src/services/PositionsService';
 import { ref, watch } from 'vue';
 
-const props = defineProps(['adim']);
-const adim = ref(props.adim);
-const position = adim.value.position;
-debugger;
+interface Props {
+  id: number;
+  label: string;
+  x: number;
+  y: number;
+}
+const props = defineProps<Props>();
 
-/*var idx = PositionsService().getIdxById(id.value);
-const positions = PositionsService().positions.value;
-const position =
-  positions != undefined
-    ? positions[idx]
-    : PositionsService().defaultStartPosition;*/
+const emit = defineEmits<{
+  (
+    e: 'drag-start',
+    payload: { id: number; offsetX: number; offsetY: number }
+  ): void;
+}>();
 
-// const kisiHavuzu = ref(null);
+const onDragStart = (event: DragEvent) => {
+  const el = event.target as HTMLElement | null;
+  if (!el) return;
+
+  const rect = el.getBoundingClientRect();
+  const offsetX = event.clientX - rect.left;
+  const offsetY = event.clientY - rect.top;
+
+  // Parent drop'ta yakalamak isterse
+  event.dataTransfer?.setData('drag-id', String(props.id));
+  event.dataTransfer?.setData('offset-x', String(offsetX));
+  event.dataTransfer?.setData('offset-y', String(offsetY));
+
+  emit('drag-start', { id: props.id, offsetX, offsetY });
+};
+
 const akisAdimTip = ref(null);
 const optionsAkisAdimTip = ['Kişi', 'Rol', 'Birim'];
 const akisAdimHedefTip = ref(null);
