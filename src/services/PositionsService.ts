@@ -4,8 +4,9 @@ import { ref } from 'vue';
 const positions = ref<IPosition[]>();
 const offsets = ref<IPosition[]>();
 const playground = ref<HTMLDivElement | null>(null);
-const position = ref({ x: 50, y: 50 }); // Başlangıç konumu
-const offset = ref({ x: 0, y: 0 });
+const position = ref<IPosition>({ x: 0, y: 0 });
+const offset = ref<IPosition>({ x: 0, y: 0 });
+const defaultStartPosition: IPosition = { x: 0, y: 0 };
 
 const onDragStart = (event: DragEvent) => {
   if (!event.target) return;
@@ -29,7 +30,7 @@ const onDrop = (event: DragEvent) => {
 };
 
 const PositionsService = () => {
-  return { positions, offsets, onDragStart, onDrop };
+  return { positions, offsets, onDragStart, onDrop, defaultStartPosition };
 };
 
 export default PositionsService;
