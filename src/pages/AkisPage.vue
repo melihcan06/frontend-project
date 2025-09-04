@@ -21,7 +21,11 @@
           @drop="PositionsService().onDrop"
         >
           <div class="row q-col-gutter-md">
-            <div v-for="id in components" :key="id" class="col-12 col-md-4">
+            <div
+              v-for="id in PositionsService().components"
+              :key="id"
+              class="col-12 col-md-4"
+            >
               <AkisAdim :id="id" />
             </div>
           </div>
@@ -32,16 +36,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import AkisAdim from 'src/components/AkisAdim.vue';
 import PositionsService from 'src/services/PositionsService';
 
-// component sayısını tutuyoruz
-const components = ref<number[]>([]);
-
 function addComponent() {
-  //PositionsService().positions.value?.push;
-  components.value.push(Date.now()); // benzersiz key için timestamp
+  PositionsService().positions.value?.push(
+    PositionsService().defaultStartPosition
+  );
+  PositionsService().components.value.push(Date.now()); // benzersiz key için timestamp
 }
 </script>
 
