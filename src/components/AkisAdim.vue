@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    :label="getAdimLabel()"
+    :label="adimLabel"
     color="primary"
     draggable="true"
     :style="{ position: 'absolute', top: y + 'px', left: x + 'px' }"
