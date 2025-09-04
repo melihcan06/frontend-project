@@ -70,8 +70,9 @@
 import PositionsService from 'src/services/PositionsService';
 import { ref, watch } from 'vue';
 
-const props = defineProps(['position']);
-console.log(props);
+const props = defineProps(['id']);
+const positions = PositionsService().positions.value;
+const position = positions != undefined ? positions[props.id] : { x: 0, y: 0 };
 
 // const kisiHavuzu = ref(null);
 const akisAdimTip = ref(null);

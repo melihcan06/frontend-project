@@ -22,7 +22,7 @@
         >
           <div class="row q-col-gutter-md">
             <div v-for="id in components" :key="id" class="col-12 col-md-4">
-              <AkisAdim position="{x:10, y:10}" />
+              <AkisAdim :id="id" />
             </div>
           </div>
         </div>
@@ -40,10 +40,11 @@ import PositionsService from 'src/services/PositionsService';
 const components = ref<number[]>([]);
 
 function addComponent() {
+  PositionsService().positions.value?.push;
   components.value.push(Date.now()); // benzersiz key için timestamp
 }
 //PositionsService().positions.value.;
-//PositionsService().positions.value?.push;
+//PositionsService().positions.value?.push//;
 </script>
 
 <style scoped>
