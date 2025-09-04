@@ -73,17 +73,8 @@ import { ref, watch } from 'vue';
 const props = defineProps(['id']);
 const id = ref(props.id);
 
+var idx = PositionsService().getIdxById(id.value);
 const positions = PositionsService().positions.value;
-const components = PositionsService().components.value;
-var idx = 0;
-if (positions != undefined) {
-  for (var i = 0; i < components?.length; i++) {
-    if (id.value === components[i]) {
-      idx = i;
-      break;
-    }
-  }
-}
 const position =
   positions != undefined
     ? positions[idx]

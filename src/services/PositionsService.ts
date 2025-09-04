@@ -28,10 +28,26 @@ const onDrop = (event: DragEvent) => {
     x: event.clientX - containerRect.left - offset.value.x,
     y: event.clientY - containerRect.top - offset.value.y,
   };
+  debugger;
+};
+
+const getIdxById = (id: number) => {
+  let idx = 0;
+  const components = PositionsService().components.value;
+  if (components != undefined) {
+    for (let i = 0; i < components?.length; i++) {
+      if (id === components[i]) {
+        idx = i;
+        break;
+      }
+    }
+  }
+  return idx;
 };
 
 const PositionsService = () => {
   return {
+    getIdxById,
     components,
     positions,
     playground,
