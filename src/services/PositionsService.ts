@@ -2,9 +2,6 @@ import { IAkisAdim } from 'src/models/IAkisAdim';
 import { IPosition } from 'src/models/IPosition';
 import { ref } from 'vue';
 
-const components = ref<number[]>([]);
-const positions = ref<IPosition[]>([]);
-
 const playground = ref<HTMLDivElement | null>(null);
 const position = ref<IPosition>({ x: 0, y: 310 });
 const offset = ref<IPosition>({ x: 310, y: 0 });
@@ -36,25 +33,26 @@ const onDrop = (event: DragEvent) => {
   };
 
   //test
-  for (let i = 0; i < positions.value?.length; i++) {
+  /*for (let i = 0; i < positions.value?.length; i++) {
     positions.value[i] = position.value;
+  }*/
+  for (let i = 0; i < adimlar.value?.length; i++) {
+    adimlar.value[i].position = position.value;
   }
 
   debugger;
 };
 
 const getIdxById = (id: number) => {
-  let idx = 0;
-  const components = PositionsService().components.value;
+  const components = PositionsService().adimlar.value;
   if (components != undefined) {
     for (let i = 0; i < components?.length; i++) {
-      if (id === components[i]) {
-        idx = i;
-        break;
+      if (id === components[i].id) {
+        return i;
       }
     }
   }
-  return idx;
+  return -1;
 };
 
 const PositionsService = () => {
@@ -62,8 +60,6 @@ const PositionsService = () => {
     adimlar,
     defaultStartAdim,
     getIdxById,
-    components,
-    positions,
     playground,
     defaultStartPosition,
     onDragStart,

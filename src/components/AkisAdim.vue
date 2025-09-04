@@ -72,15 +72,16 @@
 import PositionsService from 'src/services/PositionsService';
 import { ref, watch } from 'vue';
 
-const props = defineProps(['id']);
-const id = ref(props.id);
+const props = defineProps(['adim']);
+const adim = ref(props.adim);
+const position = adim.value.position;
 
-var idx = PositionsService().getIdxById(id.value);
+/*var idx = PositionsService().getIdxById(id.value);
 const positions = PositionsService().positions.value;
 const position =
   positions != undefined
     ? positions[idx]
-    : PositionsService().defaultStartPosition;
+    : PositionsService().defaultStartPosition;*/
 
 // const kisiHavuzu = ref(null);
 const akisAdimTip = ref(null);

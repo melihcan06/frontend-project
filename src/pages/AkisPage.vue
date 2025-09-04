@@ -22,12 +22,12 @@
         >
           <div class="row q-col-gutter-md">
             <div
-              v-for="id in PositionsService().components.value"
-              :key="id"
+              v-for="adim in PositionsService().adimlar.value"
+              :key="adim.id"
               class="col-12 col-md-4"
             >
               <div>
-                <AkisAdim :id="id" />
+                <AkisAdim :adim="adim" />
               </div>
             </div>
           </div>
@@ -43,11 +43,6 @@ import PositionsService from 'src/services/PositionsService';
 
 function addComponent() {
   PositionsService().adimlar.value.push(PositionsService().defaultStartAdim);
-  PositionsService().positions.value?.push(
-    PositionsService().defaultStartPosition
-  );
-  PositionsService().components.value.push(Date.now()); // benzersiz key için timestamp
-  debugger;
 }
 </script>
 
