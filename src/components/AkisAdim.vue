@@ -79,6 +79,7 @@ const emit = defineEmits<{
   ): void;
 }>();
 
+// --- drag ---
 const onDragStart = (event: DragEvent) => {
   const el = event.target as HTMLElement | null;
   if (!el) return;
@@ -87,7 +88,6 @@ const onDragStart = (event: DragEvent) => {
   const offsetX = event.clientX - rect.left;
   const offsetY = event.clientY - rect.top;
 
-  // Parent drop'ta yakalamak isterse
   event.dataTransfer?.setData('drag-id', String(props.id));
   event.dataTransfer?.setData('offset-x', String(offsetX));
   event.dataTransfer?.setData('offset-y', String(offsetY));
@@ -95,9 +95,20 @@ const onDragStart = (event: DragEvent) => {
   emit('drag-start', { id: props.id, offsetX, offsetY });
 };
 
-const akisAdimTip = ref(null);
+// --- adım state ---
+const akisAdimTip = ref<string | null>(null);
 const optionsAkisAdimTip = ['Kişi', 'Rol', 'Birim'];
-const akisAdimHedefTip = ref(null);
+
+const atanacakKullanicilar = ref<string[]>([]);
+const optionsAtanacakKullanicilar = [
+  'Ahmet Talha Çankal',
+  'Erkan Feyyaz Yerdurmaz',
+  'İbrahim Caner Karataş',
+  'Mehmet Talha Kara',
+  'Melih Can Kılıç',
+];
+
+const akisAdimHedefTip = ref<string | null>(null);
 const optionsAkisAdimHedefTip = [
   'Tüm işlere bakarak ata',
   'Bugünün işlerine bakarak ata',
@@ -114,47 +125,35 @@ const selectAdimHedefTipTarih = () => {
   adimHedefTipTarih.value = proxyAdimHedefTipTarih.value;
 };
 
-const atanacakKullanicilar = ref<string[]>();
-const optionsAtanacakKullanicilar = [
-  'Ahmet Talha Çankal',
-  'Erkan Feyyaz Yerdurmaz',
-  'İbrahim Caner Karataş',
-  'Mehmet Talha Kara',
-  'Melih Can Kılıç',
-];
-
+// --- label ---
 const adimLabel = ref('Yeni Adım');
 const getAdimLabel = () => {
   if (akisAdimTip.value === 'Kişi') {
-    if (
-      atanacakKullanicilar.value != null && //libutil list is not empty fonk. yap!
-      atanacakKullanicilar.value[0] != undefined
-    ) {
-      const totalComplete = ref('');
+    if (atanacakKullanicilar.value?.length) {
+      let totalComplete = '';
       atanacakKullanicilar.value.forEach((el, idx) => {
         if (idx < 2) {
-          totalComplete.value += el + ', ';
+          totalComplete += el + ', ';
         }
       });
-      return totalComplete.value;
+      return totalComplete || 'Kişi Seçilmemiş';
     } else {
       return 'Kişi Seçilmemiş';
     }
-  } else {
-    return 'Birim veya Rol';
   }
+  return 'Birim veya Rol';
 };
-watch(akisAdimTip, (eskiAdimTip, yeniAdimTip) => {
-  console.log('watch akisAdimTip');
-  console.log(eskiAdimTip, yeniAdimTip);
+
+// İlk değer hesapla
+adimLabel.value = getAdimLabel();
+
+// Watchers
+watch(akisAdimTip, (yeniAdimTip, eskiAdimTip) => {
+  console.log('watch akisAdimTip', yeniAdimTip, eskiAdimTip);
   adimLabel.value = getAdimLabel();
 });
-watch(
-  atanacakKullanicilar,
-  (eskiAtanacakKullanicilar, yeniAtanacakKullanicilar) => {
-    console.log('watch atanacakKullanicilar');
-    console.log(eskiAtanacakKullanicilar, yeniAtanacakKullanicilar);
-    adimLabel.value = getAdimLabel();
-  }
-);
+watch(atanacakKullanicilar, (yeniVal, eskiVal) => {
+  console.log('watch atanacakKullanicilar', yeniVal, eskiVal);
+  adimLabel.value = getAdimLabel();
+});
 </script>
