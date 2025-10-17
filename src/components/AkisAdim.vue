@@ -132,8 +132,14 @@ const getAdimLabel = () => {
     if (atanacakKullanicilar.value?.length) {
       let totalComplete = '';
       atanacakKullanicilar.value.forEach((el, idx) => {
-        if (idx < 2) {
-          totalComplete += el + ', ';
+        let maxShowingName = 1;
+        if (idx < maxShowingName) {
+          totalComplete += el;
+          if (atanacakKullanicilar.value.length - 1 != idx) {
+            totalComplete += ', ';
+          }
+        } else if (idx == maxShowingName) {
+          totalComplete += '...';
         }
       });
       return totalComplete || 'Kişi Seçilmemiş';
