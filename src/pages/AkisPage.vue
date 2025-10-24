@@ -57,34 +57,18 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
 import AkisAdim from 'src/components/AkisAdim.vue';
-
-type ButtonItem = {
-  id: number;
-  label: string;
-  x: number;
-  y: number;
-  connections: number[];
-};
-
-type Line = {
-  id: string; // "from-to"
-  from: number;
-  to: number;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-};
+import { ButtonItem } from 'src/models/ButtonItem';
+import { Line } from 'src/models/Line';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
 let counter = 1;
 
 // --- LocalStorage ---
-const saved = localStorage.getItem('akisButtons');
+/*const saved = localStorage.getItem('akisButtons');
 if (saved) {
   buttons.value = JSON.parse(saved);
-}
+}*/
 watch(
   buttons,
   (val) => {
