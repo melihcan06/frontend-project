@@ -59,13 +59,13 @@ import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
 import AkisAdim from 'src/components/AkisAdim.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { Line } from 'src/models/Line';
-import { AkisAdim as AkisAdim2 } from 'src/models/models_from_backend/models';
+import { AkisAdim as IAkisAdim } from 'src/models/models_from_backend/models';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
 let counter = 1;
 
-let test = ref<AkisAdim2>();
+let test = ref<IAkisAdim>();
 test.value = undefined;
 
 // --- LocalStorage ---
@@ -131,13 +131,15 @@ onBeforeUnmount(() => {
 
 // --- Add Button ---
 const addButton = () => {
-  buttons.value.push({
+  var temp = <ButtonItem>{
     id: counter,
     label: `Adım ${counter}`,
     x: 40 + (counter - 1) * 30,
     y: 40 + (counter - 1) * 30,
     connections: [],
-  });
+  };
+
+  buttons.value.push(temp);
   counter++;
 };
 
