@@ -59,16 +59,22 @@ import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
 import AkisAdim from 'src/components/AkisAdim.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { Line } from 'src/models/Line';
+import { AkisAdim as AkisAdim2 } from 'src/models/models_from_backend/models';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
 let counter = 1;
 
+let test = ref<AkisAdim2>();
+test.value = undefined;
+
 // --- LocalStorage ---
-/*const saved = localStorage.getItem('akisButtons');
+const saved = localStorage.getItem('akisButtons');
 if (saved) {
   buttons.value = JSON.parse(saved);
-}*/
+}
+debugger;
+
 watch(
   buttons,
   (val) => {
