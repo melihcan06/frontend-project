@@ -64,7 +64,7 @@ import AkisService from 'src/services/AkisService';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
-
+const { getSiradakiAdimNoBaslangic } = AkisService();
 // --- LocalStorage ---
 /*const saved = localStorage.getItem('akisButtons');
 if (saved) {
@@ -74,17 +74,7 @@ if (saved) {
 buttons.value = JSON.parse(
   '[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
 );
-
-const { getSiradakiAdimNoBaslangic } = AkisService();
-let counter = getSiradakiAdimNoBaslangic(buttons.value);
-
-watch(
-  buttons,
-  (val) => {
-    localStorage.setItem('akisButtons', JSON.stringify(val));
-  },
-  { deep: true }
-);
+let siradakiAdimNo = getSiradakiAdimNoBaslangic(buttons.value);
 
 // --- Drag State ---
 const dragging = ref<{ id: number | null; offsetX: number; offsetY: number }>({
@@ -125,30 +115,23 @@ const handleKeydown = (e: KeyboardEvent) => {
   }
 };
 
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener('keydown', handleKeydown);
-});
-
 // --- Add Button ---
 const addButton = () => {
   var temp2 = <AkisAdim>{
-    adimNo: counter,
+    adimNo: siradakiAdimNo,
   };
   console.log(temp2);
   debugger;
 
   var temp = <ButtonItem>{
-    id: counter,
-    label: `Adım ${counter}`,
-    x: 40 + (counter - 1) * 30,
-    y: 40 + (counter - 1) * 30,
+    id: siradakiAdimNo,
+    label: `Adım ${siradakiAdimNo}`,
+    x: 40 + (siradakiAdimNo - 1) * 30,
+    y: 40 + (siradakiAdimNo - 1) * 30,
     connections: [],
   };
   buttons.value.push(temp);
-  counter++;
+  siradakiAdimNo++;
 };
 
 // --- Button Click (connection mode) ---
@@ -243,6 +226,22 @@ const lines = computed<ILine[]>(() => {
   });
   return arr;
 });
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
+
+watch(
+  buttons,
+  (val) => {
+    localStorage.setItem('akisButtons', JSON.stringify(val));
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped>
