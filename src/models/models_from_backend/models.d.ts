@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-10-26 11:18:46.
+// Generated using typescript-generator version 3.2.1263 on 2025-10-26 22:06:29.
 
 export interface AkisAdim extends BaseModel {
     adimNo: number;
@@ -8,8 +8,10 @@ export interface AkisAdim extends BaseModel {
     birimId: string;
     rolId: string;
     tip: string;
-    sonlanmaAdimi: boolean;
+    x: number;
+    y: number;
     baslangicAdimi: boolean;
+    sonlanmaAdimi: boolean;
 }
 
 export interface AkisBag extends BaseModel {

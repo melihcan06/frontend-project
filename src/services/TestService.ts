@@ -4,7 +4,7 @@ import api from './ApiService';
 const getAkisAdimRandom = async (): Promise<AkisAdim | null> => {
   let response = null;
   await api.get('/test/getAkisAdimRandom', {}).then((resp) => {
-    response = resp;
+    response = resp?.data;
   });
   return response;
 };
