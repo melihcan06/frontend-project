@@ -68,15 +68,17 @@ let test = ref<AkisAdim>();
 test.value = undefined;
 
 // --- LocalStorage ---
-const saved = localStorage.getItem('akisButtons');
+/*const saved = localStorage.getItem('akisButtons');
 if (saved) {
   buttons.value = JSON.parse(saved);
-}
-debugger;
-console.log(AkisService);
+}*/
+//test
+buttons.value = JSON.parse(
+  '[{ "id": 1, "label": "Adım 1", "x": 594, "y": 23, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 333, "y": 246, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 814, "y": 249, "connections": [1] }]'
+);
+
 const { getSiradakiAdimNoBaslangic } = AkisService();
 let counter = getSiradakiAdimNoBaslangic(buttons.value);
-//let counter = 1;
 
 watch(
   buttons,
