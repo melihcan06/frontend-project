@@ -5,10 +5,10 @@ const getSiradakiAdimNoBaslangic = (buttons2: ButtonItem[]) => {
   console.log(buttons2);
   buttons2?.forEach((from) => {
     if (from.id > counter) {
-      counter = from.id + 1;
+      counter = from.id;
     }
   });
-  return counter;
+  return counter + 1;
 };
 
 const AkisService = () => {

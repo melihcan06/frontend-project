@@ -64,8 +64,6 @@ import AkisService from 'src/services/AkisService';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
-let test = ref<AkisAdim>();
-test.value = undefined;
 
 // --- LocalStorage ---
 /*const saved = localStorage.getItem('akisButtons');
@@ -140,6 +138,7 @@ const addButton = () => {
     adimNo: counter,
   };
   console.log(temp2);
+  debugger;
 
   var temp = <ButtonItem>{
     id: counter,
