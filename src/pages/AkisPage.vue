@@ -59,22 +59,26 @@ import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
 import AkisAdimCmp from 'src/components/AkisAdimCmp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
-import { AkisAdim } from 'src/models/models_from_backend/models';
 import AkisService from 'src/services/AkisService';
-
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
-const { getSiradakiAdimNoBaslangic } = AkisService();
+const { adimEkle } = AkisService();
+
 // --- LocalStorage ---
 /*const saved = localStorage.getItem('akisButtons');
 if (saved) {
   buttons.value = JSON.parse(saved);
 }*/
+
 //test
 buttons.value = JSON.parse(
   '[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
 );
-let siradakiAdimNo = getSiradakiAdimNoBaslangic(buttons.value);
+
+// --- Add Button ---
+const addButton = () => {
+  adimEkle(buttons.value);
+};
 
 // --- Drag State ---
 const dragging = ref<{ id: number | null; offsetX: number; offsetY: number }>({
@@ -113,25 +117,6 @@ const handleKeydown = (e: KeyboardEvent) => {
     }
     selectedConnection.value = null;
   }
-};
-
-// --- Add Button ---
-const addButton = () => {
-  var temp2 = <AkisAdim>{
-    adimNo: siradakiAdimNo,
-  };
-  console.log(temp2);
-  debugger;
-
-  var temp = <ButtonItem>{
-    id: siradakiAdimNo,
-    label: `Adım ${siradakiAdimNo}`,
-    x: 40 + (siradakiAdimNo - 1) * 30,
-    y: 40 + (siradakiAdimNo - 1) * 30,
-    connections: [],
-  };
-  buttons.value.push(temp);
-  siradakiAdimNo++;
 };
 
 // --- Button Click (connection mode) ---

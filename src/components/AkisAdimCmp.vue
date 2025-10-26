@@ -147,7 +147,7 @@ const getAdimLabel = () => {
       return 'Kişi Seçilmemiş';
     }
   }
-  return 'Birim veya Rol' + props.id;
+  return 'Birim veya Rol' + ' ' + props.id;
 };
 
 // İlk değer hesapla
