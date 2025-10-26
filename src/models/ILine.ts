@@ -1,4 +1,4 @@
-export interface Line {
+export interface ILine {
   id: string; // "from-to"
   from: number;
   to: number;

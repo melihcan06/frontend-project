@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import DraggableButton from 'src/components/AkisAdim.vue';
+import DraggableButton from 'src/components/AkisAdimCmp.vue';
 
 type ButtonItem = {
   id: number;

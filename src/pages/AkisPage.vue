@@ -39,7 +39,7 @@
       </svg>
 
       <!-- Butonlar -->
-      <AkisAdim
+      <AkisAdimCmp
         v-for="btn in buttons"
         :key="btn.id"
         :id="btn.id"
@@ -56,22 +56,28 @@
 
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
-import AkisAdim from 'src/components/AkisAdim.vue';
+import AkisAdimCmp from 'src/components/AkisAdimCmp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
-import { Line } from 'src/models/Line';
-import { AkisAdim as IAkisAdim } from 'src/models/models_from_backend/models';
+import { ILine } from 'src/models/ILine';
+import { AkisAdim } from 'src/models/models_from_backend/models';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
 let counter = 1;
 
-let test = ref<IAkisAdim>();
+let test = ref<AkisAdim>();
 test.value = undefined;
 
 // --- LocalStorage ---
 const saved = localStorage.getItem('akisButtons');
 if (saved) {
+  debugger;
   buttons.value = JSON.parse(saved);
+  buttons.value.forEach((from) => {
+    if (from.id > counter) {
+      counter = from.id + 1;
+    }
+  });
 }
 debugger;
 
@@ -100,9 +106,9 @@ const toggleConnectMode = () => {
 };
 
 // --- Seçili Connection ---
-const selectedConnection = ref<Line | null>(null);
+const selectedConnection = ref<ILine | null>(null);
 
-const selectConnection = (line: Line) => {
+const selectConnection = (line: ILine) => {
   selectedConnection.value =
     selectedConnection.value?.id === line.id ? null : line;
 };
@@ -131,6 +137,11 @@ onBeforeUnmount(() => {
 
 // --- Add Button ---
 const addButton = () => {
+  var temp2 = <AkisAdim>{
+    adimNo: counter,
+  };
+  console.log(temp2);
+
   var temp = <ButtonItem>{
     id: counter,
     label: `Adım ${counter}`,
@@ -138,7 +149,6 @@ const addButton = () => {
     y: 40 + (counter - 1) * 30,
     connections: [],
   };
-
   buttons.value.push(temp);
   counter++;
 };
@@ -211,8 +221,8 @@ const onUpdateLabel = (payload: { id: number; label: string }) => {
 };
 
 // --- Çizgiler ---
-const lines = computed<Line[]>(() => {
-  const arr: Line[] = [];
+const lines = computed<ILine[]>(() => {
+  const arr: ILine[] = [];
   buttons.value.forEach((from) => {
     const fromX = from.x + 60;
     const fromY = from.y + 20;

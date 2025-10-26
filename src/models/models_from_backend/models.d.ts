@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-10-25 23:25:53.
+// Generated using typescript-generator version 3.2.1263 on 2025-10-26 11:18:46.
 
 export interface AkisAdim extends BaseModel {
     adimNo: number;
