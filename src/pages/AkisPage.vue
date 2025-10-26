@@ -60,26 +60,23 @@ import AkisAdimCmp from 'src/components/AkisAdimCmp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import { AkisAdim } from 'src/models/models_from_backend/models';
+import AkisService from 'src/services/AkisService';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
-let counter = 1;
-
 let test = ref<AkisAdim>();
 test.value = undefined;
 
 // --- LocalStorage ---
 const saved = localStorage.getItem('akisButtons');
 if (saved) {
-  debugger;
   buttons.value = JSON.parse(saved);
-  buttons.value.forEach((from) => {
-    if (from.id > counter) {
-      counter = from.id + 1;
-    }
-  });
 }
 debugger;
+console.log(AkisService);
+const { getSiradakiAdimNoBaslangic } = AkisService();
+let counter = getSiradakiAdimNoBaslangic(buttons.value);
+//let counter = 1;
 
 watch(
   buttons,
