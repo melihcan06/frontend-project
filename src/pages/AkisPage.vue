@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="q-mb-md row q-gutter-sm">
-      <q-btn label="Yeni Adım Ekle" color="secondary" @click="addButton" />
+      <q-btn label="Yeni Adım Ekle" color="secondary" @click="yeniAdimEkle" />
       <q-btn
         :color="connectMode ? 'negative' : 'primary'"
         :label="connectMode ? 'Bağlantı Modu: Açık' : 'Bağlantı Modu: Kapalı'"
@@ -60,6 +60,8 @@ import AkisAdimCmp from 'src/components/AkisAdimCmp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
+import TestService from 'src/services/TestService';
+
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
 const { adimEkle } = AkisService();
@@ -75,8 +77,13 @@ buttons.value = JSON.parse(
   '[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
 );
 
+debugger;
+const { getAkisAdimRandom } = TestService();
+await getAkisAdimRandom();
+debugger;
+
 // --- Add Button ---
-const addButton = () => {
+const yeniAdimEkle = () => {
   adimEkle(buttons.value);
 };
 
