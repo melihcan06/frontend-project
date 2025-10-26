@@ -39,7 +39,7 @@
       </svg>
 
       <!-- Butonlar -->
-      <AkisAdimCmp
+      <AkisAdimComp
         v-for="btn in buttons"
         :key="btn.id"
         :id="btn.id"
@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
-import AkisAdimCmp from 'src/components/AkisAdimCmp.vue';
+import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
@@ -77,10 +77,11 @@ buttons.value = JSON.parse(
   '[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
 );
 
-debugger;
+//debugger;
 const { getAkisAdimRandom } = TestService();
-await getAkisAdimRandom();
-debugger;
+//await getAkisAdimRandom();
+console.log(getAkisAdimRandom());
+//debugger;
 
 // --- Add Button ---
 const yeniAdimEkle = () => {

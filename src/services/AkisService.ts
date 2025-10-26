@@ -15,7 +15,7 @@ const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
 const adimEkle = (buttons: ButtonItem[]) => {
   let siradakiAdimNo = getSiradakiAdimNoBaslangic(buttons);
 
-  //test
+  //TODO test
   const temp2 = <AkisAdim>{
     adimNo: siradakiAdimNo,
   };
