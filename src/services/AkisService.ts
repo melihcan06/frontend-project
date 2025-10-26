@@ -1,9 +1,8 @@
 import { ButtonItem } from 'src/models/ButtonItem';
 
-const getSiradakiAdimNoBaslangic = (buttons2: ButtonItem[]) => {
+const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
   let counter = 1;
-  console.log(buttons2);
-  buttons2?.forEach((from) => {
+  buttons?.forEach((from) => {
     if (from.id > counter) {
       counter = from.id;
     }

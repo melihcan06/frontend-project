@@ -1,8 +1,8 @@
 {
   "name": "frontend-project",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Frontend Project",
+  "description": "İş Akışı Uygulaması",
+  "productName": "İş Akışı",
   "author": "Melih Can <melihcankilic@gmail.com>",
   "private": true,
   "scripts": {

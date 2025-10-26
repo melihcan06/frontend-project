@@ -72,7 +72,7 @@ if (saved) {
 }*/
 //test
 buttons.value = JSON.parse(
-  '[{ "id": 1, "label": "Adım 1", "x": 594, "y": 23, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 333, "y": 246, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 814, "y": 249, "connections": [1] }]'
+  '[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
 );
 
 const { getSiradakiAdimNoBaslangic } = AkisService();
