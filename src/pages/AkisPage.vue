@@ -37,10 +37,23 @@
             <polygon points="0 0, 10 3.5, 0 7" fill="black" />
           </marker>
         </defs>
+
+        <!-- <line
+          v-for="(line, idx) in akis?.listAkisBag"
+          :key="idx"
+          :x1="line.x1"
+          :y1="line.y1"
+          :x2="line.x2"
+          :y2="line.y2"
+          :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
+          stroke-width="2"
+          marker-end="url(#arrowhead)"
+          @click="selectConnection(line)"
+        /> -->
       </svg>
 
       <!-- Butonlar -->
-      <AkisAdimComp
+      <!--       <AkisAdimComp
         v-for="btn in buttons"
         :key="btn.id"
         :id="btn.id"
@@ -50,7 +63,7 @@
         @click="onButtonClick(btn)"
         @drag-start="onChildDragStart"
         @update-label="onUpdateLabel"
-      />
+      /> -->
 
       <!-- Butonlar -->
       <AkisAdimComp
@@ -60,6 +73,9 @@
         :label="btn.tip"
         :x="btn.x"
         :y="btn.y"
+        @click="onAdimClick(btn)"
+        @drag-start="onChildDragStart"
+        @update-label="onUpdateLabel"
       />
     </div>
   </q-page>
@@ -71,7 +87,7 @@ import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
-import { AkisDto } from 'src/models/models_from_backend/models';
+import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
 //import TestService from 'src/services/TestService';
 
 const playground = ref<HTMLDivElement | null>(null);
@@ -104,6 +120,7 @@ const test = async () => {
   akis.value = await getAkisByAkisNo(1);
   console.log(akis.value);
   //buttons.value.push(temp);
+  debugger;
 };
 
 // --- Add Button ---
@@ -151,7 +168,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 };
 
 // --- Button Click (connection mode) ---
-const onButtonClick = (btn: ButtonItem) => {
+/*const onButtonClick = (btn: ButtonItem) => {
   if (!connectMode.value) return;
 
   if (selectedForConnect.value == null) {
@@ -163,6 +180,10 @@ const onButtonClick = (btn: ButtonItem) => {
     }
     selectedForConnect.value = null;
   }
+};*/
+
+const onAdimClick = (btn: AkisAdim) => {
+  console.log(btn);
 };
 
 // --- Drag Handlers ---
