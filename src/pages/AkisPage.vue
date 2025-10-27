@@ -120,7 +120,7 @@ const test = async () => {
   akis.value = await getAkisByAkisNo(1);
   console.log(akis.value);
   //buttons.value.push(temp);
-  debugger;
+  //debugger;
 };
 
 // --- Add Button ---

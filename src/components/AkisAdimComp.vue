@@ -132,7 +132,7 @@ const getAdimLabel = () => {
     if (atanacakKullanicilar.value?.length) {
       let totalComplete = '';
       atanacakKullanicilar.value.forEach((el, idx) => {
-        let maxShowingName = 1;
+        let maxShowingName = 2;
         if (idx < maxShowingName) {
           totalComplete += el;
           if (atanacakKullanicilar.value.length - 1 != idx) {
