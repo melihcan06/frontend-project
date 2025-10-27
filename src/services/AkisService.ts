@@ -15,7 +15,7 @@ const createAkisAdim = (siradakiAdimNo: number): AkisAdim => {
 };
 
 const getSiradakiAdimNo = (adimlar: AkisAdim[]) => {
-  const no = adimlar?.length + 1; //TODO test et boş veya null veya undefined ise 1 mi dönüyor ?
+  const no = adimlar?.length + 1;
   return Number.isNaN(no) ? 1 : no;
 };
 
