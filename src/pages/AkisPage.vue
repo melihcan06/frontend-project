@@ -79,10 +79,15 @@ buttons.value = JSON.parse(
 );
 
 const test = async () => {
-  debugger;
-  const { getAkisAdimRandom } = TestService();
+  const { getAkisAdimRandom, listAkisAdimByAkisNo, listAkisBagByAkisNo } =
+    TestService();
   const temp = await getAkisAdimRandom();
   console.log(temp);
+  const temp2 = await listAkisAdimByAkisNo();
+  console.log(temp2);
+  const temp3 = await listAkisBagByAkisNo();
+  console.log(temp3);
+  //buttons.value.push(temp);
   debugger;
 };
 
