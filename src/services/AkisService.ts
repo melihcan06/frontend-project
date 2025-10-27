@@ -1,5 +1,6 @@
 import { ButtonItem } from 'src/models/ButtonItem';
-import { AkisAdim } from 'src/models/models_from_backend/models';
+import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
+import api from './ApiService';
 
 const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
   /*let counter = 0;
@@ -14,14 +15,6 @@ const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
 
 const adimEkle = (buttons: ButtonItem[]) => {
   let siradakiAdimNo = getSiradakiAdimNoBaslangic(buttons);
-
-  //TODO test
-  const temp2 = <AkisAdim>{
-    adimNo: siradakiAdimNo,
-  };
-  console.log(temp2);
-  debugger;
-
   const temp = <ButtonItem>{
     id: siradakiAdimNo,
     label: `Adım ${siradakiAdimNo}`,
@@ -33,10 +26,21 @@ const adimEkle = (buttons: ButtonItem[]) => {
   siradakiAdimNo++;
 };
 
+const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto | null> => {
+  let response = null;
+  await api
+    .post('/akis/getAkisByAkisNo', { akisNo: akisNumber })
+    .then((resp) => {
+      response = resp?.data;
+    });
+  return response;
+};
+
 const AkisService = () => {
   return {
     getSiradakiAdimNoBaslangic,
     adimEkle,
+    getAkisByAkisNo,
   };
 };
 
