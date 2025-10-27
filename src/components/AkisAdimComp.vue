@@ -138,12 +138,12 @@ const getAdimLabel = () => {
           totalComplete += '...';
         }
       });
-      return totalComplete || 'Kişi Seçilmemiş';
+      return (totalComplete || 'Kişi Seçilmemiş') + ' (' + props.adimNo + ')';
     } else {
-      return 'Kişi Seçilmemiş';
+      return 'Kişi Seçilmemiş' + ' (' + props.adimNo + ')';
     }
   }
-  return 'Birim veya Rol' + ' ' + props.id;
+  return 'Birim veya Rol' + ' (' + props.adimNo + ')';
 };
 
 // İlk değer hesapla
