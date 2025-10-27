@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="q-mb-md row q-gutter-sm">
       <q-btn label="TEST" color="secondary" @click="test" />
-      <q-btn label="Yeni Adım Ekle" color="secondary" @click="yeniAdimEkle" />
+      <q-btn label="Yeni Adım Ekle" color="secondary" @click="yeniAdimEkle()" />
       <q-btn
         :color="connectMode ? 'negative' : 'primary'"
         :label="connectMode ? 'Bağlantı Modu: Açık' : 'Bağlantı Modu: Kapalı'"
@@ -14,17 +14,19 @@
       <!-- SVG layer -->
       <svg class="connections">
         <line
-          v-for="(line, idx) in lines"
+          v-for="(line, idx) in akis?.listAkisBag"
           :key="idx"
-          :x1="line.x1"
-          :y1="line.y1"
-          :x2="line.x2"
-          :y2="line.y2"
-          :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
+          :x1="getBagKonum(akis, line).x1"
+          :y1="getBagKonum(akis, line).y1"
+          :x2="getBagKonum(akis, line).x2"
+          :y2="getBagKonum(akis, line).y2"
+          stroke="black"
+          marker-end="url(#arrowhead)"
+        />
+        <!-- :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
           stroke-width="2"
           marker-end="url(#arrowhead)"
-          @click="selectConnection(line)"
-        />
+          @click="selectConnection(line)" -->
         <defs>
           <marker
             id="arrowhead"
@@ -37,42 +39,14 @@
             <polygon points="0 0, 10 3.5, 0 7" fill="black" />
           </marker>
         </defs>
-
-        <line
-          v-for="(line, idx) in akis?.listAkisBag"
-          :key="idx"
-          :x1="getAkisBagKonum(akis, line).x1"
-          :y1="getAkisBagKonum(akis, line).y1"
-          :x2="getAkisBagKonum(akis, line).x2"
-          :y2="getAkisBagKonum(akis, line).y2"
-          stroke="black"
-          marker-end="url(#arrowhead)"
-        />
-        <!-- :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
-          stroke-width="2"
-          marker-end="url(#arrowhead)"
-          @click="selectConnection(line)" -->
       </svg>
-
-      <!-- Butonlar -->
-      <!--       <AkisAdimComp
-        v-for="btn in buttons"
-        :key="btn.id"
-        :id="btn.id"
-        :label="btn.label"
-        :x="btn.x"
-        :y="btn.y"
-        @click="onButtonClick(btn)"
-        @drag-start="onChildDragStart"
-        @update-label="onUpdateLabel"
-      /> -->
 
       <!-- Butonlar -->
       <AkisAdimComp
         v-for="btn in akis?.listAkisAdim"
         :key="btn.id"
         :id="btn.adimNo"
-        :label="btn.tip"
+        label=""
         :x="btn.x"
         :y="btn.y"
         @click="onAdimClick(btn)"
@@ -84,61 +58,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
-import {
-  AkisAdim,
-  AkisBag,
-  AkisDto,
-} from 'src/models/models_from_backend/models';
-//import TestService from 'src/services/TestService';
+import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
-const akis = ref<AkisDto | null>();
-const { adimEkle, getAkisByAkisNo, getBagKonum } = AkisService();
-
-// --- LocalStorage ---
-/*const saved = localStorage.getItem('akisButtons');
-if (saved) {
-  buttons.value = JSON.parse(saved);
-}*/
-
-//test
-buttons.value = JSON.parse(
-  //'[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
-  //'[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [] }]'
-  '[{ "id": 4, "label": "Adım 4", "x": 400, "y": 125, "connections": [] }]'
-);
+const akis = ref<AkisDto>();
+const { adimEkle, getAkisByAkisNo, getBagKonum, akisAdimEkle } = AkisService();
 
 const test = async () => {
-  /*const { getAkisAdimRandom, listAkisAdimByAkisNo, listAkisBagByAkisNo } = TestService();
-  const temp = await getAkisAdimRandom();
-  console.log(temp);
-  const temp2 = await listAkisAdimByAkisNo();
-  console.log(temp2);
-  const temp3 = await listAkisBagByAkisNo();
-  console.log(temp3);*/
-
   akis.value = await getAkisByAkisNo(1);
   console.log(akis.value);
-  //buttons.value.push(temp);
-  //debugger;
-};
-
-const getAkisBagKonum = (
-  akisDto: AkisDto | null | undefined,
-  akisBag: AkisBag
-) => {
-  return getBagKonum(akisDto, akisBag);
 };
 
 // --- Add Button ---
 const yeniAdimEkle = () => {
   adimEkle(buttons.value);
+  akisAdimEkle(akis.value == undefined ? <AkisDto>{} : akis.value);
 };
 
 // --- Drag State ---
@@ -160,10 +100,10 @@ const toggleConnectMode = () => {
 // --- Seçili Connection ---
 const selectedConnection = ref<ILine | null>(null);
 
-const selectConnection = (line: ILine) => {
+/*const selectConnection = (line: ILine) => {
   selectedConnection.value =
     selectedConnection.value?.id === line.id ? null : line;
-};
+};*/
 
 // --- Delete tuşu ile silme ---
 const handleKeydown = (e: KeyboardEvent) => {
@@ -252,7 +192,7 @@ const onUpdateLabel = (payload: { id: number; label: string }) => {
 };
 
 // --- Çizgiler ---
-const lines = computed<ILine[]>(() => {
+/*const lines = computed<ILine[]>(() => {
   const arr: ILine[] = [];
   buttons.value.forEach((from) => {
     const fromX = from.x + 60;
@@ -275,7 +215,7 @@ const lines = computed<ILine[]>(() => {
     });
   });
   return arr;
-});
+});*/
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown);
