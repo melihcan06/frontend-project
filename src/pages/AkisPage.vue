@@ -51,6 +51,16 @@
         @drag-start="onChildDragStart"
         @update-label="onUpdateLabel"
       />
+
+      <!-- Butonlar -->
+      <AkisAdimComp
+        v-for="btn in akis?.listAkisAdim"
+        :key="btn.id"
+        :id="btn.adimNo"
+        :label="btn.tip"
+        :x="btn.x"
+        :y="btn.y"
+      />
     </div>
   </q-page>
 </template>
@@ -61,11 +71,13 @@ import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
-import TestService from 'src/services/TestService';
+import { AkisDto } from 'src/models/models_from_backend/models';
+//import TestService from 'src/services/TestService';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
-const { adimEkle } = AkisService();
+const akis = ref<AkisDto | null>();
+const { adimEkle, getAkisByAkisNo } = AkisService();
 
 // --- LocalStorage ---
 /*const saved = localStorage.getItem('akisButtons');
@@ -76,20 +88,22 @@ if (saved) {
 //test
 buttons.value = JSON.parse(
   //'[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [2] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [3] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [1] }]'
-  '[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [] }]'
+  //'[{ "id": 1, "label": "Adım 1", "x": 600, "y": 25, "connections": [] },{ "id": 2, "label": "Adım 2", "x": 300, "y": 225, "connections": [] },{ "id": 3, "label": "Adım 3", "x": 900, "y": 225, "connections": [] }]'
+  '[{ "id": 4, "label": "Adım 4", "x": 400, "y": 125, "connections": [] }]'
 );
 
 const test = async () => {
-  const { getAkisAdimRandom, listAkisAdimByAkisNo, listAkisBagByAkisNo } =
-    TestService();
+  /*const { getAkisAdimRandom, listAkisAdimByAkisNo, listAkisBagByAkisNo } = TestService();
   const temp = await getAkisAdimRandom();
   console.log(temp);
   const temp2 = await listAkisAdimByAkisNo();
   console.log(temp2);
   const temp3 = await listAkisBagByAkisNo();
-  console.log(temp3);
+  console.log(temp3);*/
+
+  akis.value = await getAkisByAkisNo(1);
+  console.log(akis.value);
   //buttons.value.push(temp);
-  debugger;
 };
 
 // --- Add Button ---
