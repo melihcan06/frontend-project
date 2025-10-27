@@ -10,7 +10,8 @@
       />
     </div>
 
-    <div ref="playground" class="playground" @dragover.prevent @drop="onDrop">
+    <div ref="playground" class="playground" @dragover.prevent>
+      <!-- @drop="onDrop" -->
       <!-- SVG layer -->
       <svg class="connections">
         <line
@@ -46,29 +47,23 @@
         v-for="btn in akis?.listAkisAdim"
         :key="btn.id"
         :adim="btn"
-        @click="onAdimClick(btn)"
-        @drag-start="onChildDragStart"
-        @update-label="onUpdateLabel"
+        @click="onButtonClick(btn)"
       />
-      <!-- :id="btn.adimNo"
-        :x="btn.x"
-        :y="btn.y" -->
+      <!-- @drag-start="onChildDragStart"
+        @update-label="onUpdateLabel" -->
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
 import AkisAdimComp from 'src/components/AkisAdimComp.vue';
-import { ButtonItem } from 'src/models/ButtonItem';
-import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
 import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
 
 const playground = ref<HTMLDivElement | null>(null);
-const buttons = ref<ButtonItem[]>([]);
 const akis = ref<AkisDto>();
-const { adimEkle, getAkisByAkisNo, getBagKonum, akisAdimEkle } = AkisService();
+const { getAkisByAkisNo, getBagKonum, akisAdimEkle } = AkisService();
 
 const test = async () => {
   akis.value = await getAkisByAkisNo(1);
@@ -77,16 +72,15 @@ const test = async () => {
 
 // --- Add Button ---
 const yeniAdimEkle = () => {
-  adimEkle(buttons.value);
   akisAdimEkle(akis.value == undefined ? <AkisDto>{} : akis.value);
 };
 
 // --- Drag State ---
-const dragging = ref<{ id: string | null; offsetX: number; offsetY: number }>({
+/*const dragging = ref<{ id: string | null; offsetX: number; offsetY: number }>({
   id: null,
   offsetX: 0,
   offsetY: 0,
-});
+});*/
 
 // --- Connection Mode ---
 const connectMode = ref(false);
@@ -98,12 +92,12 @@ const toggleConnectMode = () => {
 };
 
 // --- Seçili Connection ---
-const selectedConnection = ref<ILine | null>(null);
+/*const selectedConnection = ref<ILine | null>(null);
 
-/*const selectConnection = (line: ILine) => {
+const selectConnection = (line: ILine) => {
   selectedConnection.value =
     selectedConnection.value?.id === line.id ? null : line;
-};*/
+};
 
 // --- Delete tuşu ile silme ---
 const handleKeydown = (e: KeyboardEvent) => {
@@ -118,7 +112,7 @@ const handleKeydown = (e: KeyboardEvent) => {
     }
     selectedConnection.value = null;
   }
-};
+};*/
 
 // --- Button Click (connection mode) ---
 /*const onButtonClick = (btn: ButtonItem) => {
@@ -135,12 +129,12 @@ const handleKeydown = (e: KeyboardEvent) => {
   }
 };*/
 
-const onAdimClick = (btn: AkisAdim) => {
+const onButtonClick = (btn: AkisAdim) => {
   console.log(btn);
 };
 
 // --- Drag Handlers ---
-const onChildDragStart = (payload: {
+/*const onChildDragStart = (payload: {
   id: string;
   offsetX: number;
   offsetY: number;
@@ -150,10 +144,10 @@ const onChildDragStart = (payload: {
     offsetX: payload.offsetX,
     offsetY: payload.offsetY,
   };
-};
+};*/
 
-const onDrop = (event: DragEvent) => {
-  if (!playground.value) return;
+/*const onDrop = (event: DragEvent) => {
+ if (!playground.value) return;
   const rect = playground.value.getBoundingClientRect();
 
   const idStr = event.dataTransfer?.getData('drag-id');
@@ -181,15 +175,15 @@ const onDrop = (event: DragEvent) => {
   }
 
   dragging.value = { id: null, offsetX: 0, offsetY: 0 };
-};
+};*/
 
 // --- Label Update ---
-const onUpdateLabel = (payload: { id: number; label: string }) => {
+/*const onUpdateLabel = (payload: { id: number; label: string }) => {
   const idx = buttons.value.findIndex((b) => b.id === payload.id);
   if (idx !== -1) {
     buttons.value[idx].label = payload.label;
   }
-};
+};*/
 
 // --- Çizgiler ---
 /*const lines = computed<ILine[]>(() => {
@@ -217,7 +211,7 @@ const onUpdateLabel = (payload: { id: number; label: string }) => {
   return arr;
 });*/
 
-onMounted(() => {
+/*onMounted(() => {
   window.addEventListener('keydown', handleKeydown);
 });
 
@@ -231,7 +225,7 @@ watch(
     localStorage.setItem('akisButtons', JSON.stringify(val));
   },
   { deep: true }
-);
+);*/
 </script>
 
 <style scoped>

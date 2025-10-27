@@ -1,4 +1,3 @@
-import { ButtonItem } from 'src/models/ButtonItem';
 import {
   AkisAdim,
   AkisBag,
@@ -23,24 +22,6 @@ const akisAdimEkle = (akisDto: AkisDto) => {
   const siradakiAdimNo = getSiradakiAdimNo(akisDto.listAkisAdim);
   const yeniAdim = createAkisAdim(siradakiAdimNo);
   akisDto.listAkisAdim.push(yeniAdim);
-};
-
-const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
-  return buttons?.length + 1;
-};
-
-const adimEkle = (buttons: ButtonItem[]) => {
-  let siradakiAdimNo = getSiradakiAdimNoBaslangic(buttons);
-  createAkisAdim(siradakiAdimNo); //TODO test
-  const temp = <ButtonItem>{
-    id: siradakiAdimNo,
-    label: `Adım ${siradakiAdimNo}`,
-    x: 40 + (siradakiAdimNo - 1) * 30,
-    y: 40 + (siradakiAdimNo - 1) * 30,
-    connections: [],
-  };
-  buttons.push(temp);
-  siradakiAdimNo++;
 };
 
 const getBagKonum = (akisDto: AkisDto | null | undefined, akisBag: AkisBag) => {
@@ -68,8 +49,6 @@ const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto> => {
 
 const AkisService = () => {
   return {
-    getSiradakiAdimNoBaslangic,
-    adimEkle,
     getAkisByAkisNo,
     getBagKonum,
     akisAdimEkle,
