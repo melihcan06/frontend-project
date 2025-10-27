@@ -138,16 +138,16 @@ const getAdimLabel = () => {
           totalComplete += '...';
         }
       });
-      return (totalComplete || 'Kişi Seçilmemiş') + ' (' + props.adimNo + ')';
+      return (totalComplete || 'KİŞİ SEÇİLMEMİŞ') + ' (' + props.adimNo + ')';
     } else {
-      return 'Kişi Seçilmemiş' + ' (' + props.adimNo + ')';
+      return 'KİŞİ SEÇİLMEMİŞ' + ' (' + props.adimNo + ')';
     }
   } else if (akisAdimTip.value === 'Birim') {
-    return 'Birim Seçilmemiş' + ' (' + props.adimNo + ')';
+    return 'BİRİM SEÇİLMEMİŞ' + ' (' + props.adimNo + ')';
   } else if (akisAdimTip.value === 'Rol') {
-    return 'Rol Seçilmemiş' + ' (' + props.adimNo + ')';
+    return 'ROL SEÇİLMEMİŞ' + ' (' + props.adimNo + ')';
   }
-  return 'Tür Seçilmemiş (' + props.adimNo + ')';
+  return 'TÜR SEÇİLMEMİŞ (' + props.adimNo + ')';
 };
 
 // İlk değer hesapla
