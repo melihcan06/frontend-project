@@ -142,8 +142,12 @@ const getAdimLabel = () => {
     } else {
       return 'Kişi Seçilmemiş' + ' (' + props.adimNo + ')';
     }
+  } else if (akisAdimTip.value === 'Birim') {
+    return 'Birim Seçilmemiş' + ' (' + props.adimNo + ')';
+  } else if (akisAdimTip.value === 'Rol') {
+    return 'Rol Seçilmemiş' + ' (' + props.adimNo + ')';
   }
-  return 'Birim veya Rol' + ' (' + props.adimNo + ')';
+  return 'Tür Seçilmemiş (' + props.adimNo + ')';
 };
 
 // İlk değer hesapla
