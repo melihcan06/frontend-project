@@ -45,14 +45,14 @@
       <AkisAdimComp
         v-for="btn in akis?.listAkisAdim"
         :key="btn.id"
-        :id="btn.adimNo"
-        label=""
-        :x="btn.x"
-        :y="btn.y"
+        :adim="btn"
         @click="onAdimClick(btn)"
         @drag-start="onChildDragStart"
         @update-label="onUpdateLabel"
       />
+      <!-- :id="btn.adimNo"
+        :x="btn.x"
+        :y="btn.y" -->
     </div>
   </q-page>
 </template>
@@ -82,7 +82,7 @@ const yeniAdimEkle = () => {
 };
 
 // --- Drag State ---
-const dragging = ref<{ id: number | null; offsetX: number; offsetY: number }>({
+const dragging = ref<{ id: string | null; offsetX: number; offsetY: number }>({
   id: null,
   offsetX: 0,
   offsetY: 0,
@@ -141,7 +141,7 @@ const onAdimClick = (btn: AkisAdim) => {
 
 // --- Drag Handlers ---
 const onChildDragStart = (payload: {
-  id: number;
+  id: string;
   offsetX: number;
   offsetY: number;
 }) => {

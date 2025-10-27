@@ -3,7 +3,7 @@
     :label="adimLabel"
     color="primary"
     draggable="true"
-    :style="{ position: 'absolute', top: y + 'px', left: x + 'px' }"
+    :style="{ position: 'absolute', top: props.y + 'px', left: props.x + 'px' }"
     @dragstart="onDragStart"
   >
     <q-popup-proxy>
@@ -62,20 +62,16 @@
 </template>
 
 <script setup lang="ts">
+import { AkisAdim } from 'src/models/models_from_backend/models';
 import { ref, watch } from 'vue';
 
-interface Props {
-  id: number;
-  label: string;
-  x: number;
-  y: number;
-}
-const props = defineProps<Props>();
+const propsAdim = defineProps<{ adim: AkisAdim }>();
+const props = propsAdim.adim;
 
 const emit = defineEmits<{
   (
     e: 'drag-start',
-    payload: { id: number; offsetX: number; offsetY: number }
+    payload: { id: string; offsetX: number; offsetY: number }
   ): void;
 }>();
 
