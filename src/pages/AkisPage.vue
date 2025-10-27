@@ -38,18 +38,20 @@
           </marker>
         </defs>
 
-        <!-- <line
+        <line
           v-for="(line, idx) in akis?.listAkisBag"
           :key="idx"
-          :x1="line.x1"
-          :y1="line.y1"
-          :x2="line.x2"
-          :y2="line.y2"
-          :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
+          :x1="getAkisBagKonum(akis, line).x1"
+          :y1="getAkisBagKonum(akis, line).y1"
+          :x2="getAkisBagKonum(akis, line).x2"
+          :y2="getAkisBagKonum(akis, line).y2"
+          stroke="black"
+          marker-end="url(#arrowhead)"
+        />
+        <!-- :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
           stroke-width="2"
           marker-end="url(#arrowhead)"
-          @click="selectConnection(line)"
-        /> -->
+          @click="selectConnection(line)" -->
       </svg>
 
       <!-- Butonlar -->
@@ -87,13 +89,17 @@ import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import { ButtonItem } from 'src/models/ButtonItem';
 import { ILine } from 'src/models/ILine';
 import AkisService from 'src/services/AkisService';
-import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
+import {
+  AkisAdim,
+  AkisBag,
+  AkisDto,
+} from 'src/models/models_from_backend/models';
 //import TestService from 'src/services/TestService';
 
 const playground = ref<HTMLDivElement | null>(null);
 const buttons = ref<ButtonItem[]>([]);
 const akis = ref<AkisDto | null>();
-const { adimEkle, getAkisByAkisNo } = AkisService();
+const { adimEkle, getAkisByAkisNo, getBagKonum } = AkisService();
 
 // --- LocalStorage ---
 /*const saved = localStorage.getItem('akisButtons');
@@ -121,6 +127,13 @@ const test = async () => {
   console.log(akis.value);
   //buttons.value.push(temp);
   //debugger;
+};
+
+const getAkisBagKonum = (
+  akisDto: AkisDto | null | undefined,
+  akisBag: AkisBag
+) => {
+  return getBagKonum(akisDto, akisBag);
 };
 
 // --- Add Button ---

@@ -1,5 +1,5 @@
 import { ButtonItem } from 'src/models/ButtonItem';
-import { AkisDto } from 'src/models/models_from_backend/models';
+import { AkisBag, AkisDto } from 'src/models/models_from_backend/models';
 import api from './ApiService';
 
 const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
@@ -26,6 +26,26 @@ const adimEkle = (buttons: ButtonItem[]) => {
   siradakiAdimNo++;
 };
 
+const getBagKonum = (akisDto: AkisDto | null | undefined, akisBag: AkisBag) => {
+  debugger;
+  if (akisDto == null || akisDto == undefined) {
+    return { x1: 0, y1: 0, x2: 0, y2: 0 };
+  }
+  const basAdim = akisDto.listAkisAdim.find(
+    (aa) => aa.adimNo == akisBag.basAdimNo
+  );
+  const sonAdim = akisDto.listAkisAdim.find(
+    (aa) => aa.adimNo == akisBag.sonAdimNo
+  );
+  console.log({
+    x1: basAdim?.x,
+    y1: basAdim?.y,
+    x2: sonAdim?.x,
+    y2: sonAdim?.y,
+  });
+  return { x1: basAdim?.x, y1: basAdim?.y, x2: sonAdim?.x, y2: sonAdim?.y };
+};
+
 const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto | null> => {
   let response = null;
   await api
@@ -41,6 +61,7 @@ const AkisService = () => {
     getSiradakiAdimNoBaslangic,
     adimEkle,
     getAkisByAkisNo,
+    getBagKonum,
   };
 };
 
