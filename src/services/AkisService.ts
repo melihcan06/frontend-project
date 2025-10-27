@@ -1,5 +1,5 @@
 import { ButtonItem } from 'src/models/ButtonItem';
-import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
+import { AkisDto } from 'src/models/models_from_backend/models';
 import api from './ApiService';
 
 const getSiradakiAdimNoBaslangic = (buttons: ButtonItem[]) => {
