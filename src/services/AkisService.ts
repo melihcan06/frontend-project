@@ -4,6 +4,9 @@ import {
   AkisDto,
 } from 'src/models/models_from_backend/models';
 import api from './ApiService';
+import { ref } from 'vue';
+
+const connectMode = ref(false);
 
 const createAkisAdim = (siradakiAdimNo: number): AkisAdim => {
   const adim = <AkisAdim>{
@@ -61,6 +64,7 @@ const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto> => {
 
 const AkisService = () => {
   return {
+    connectMode,
     getAkisByAkisNo,
     getBagBasSonAdimlar,
     getBagKonum,

@@ -6,7 +6,7 @@
     :style="{ position: 'absolute', top: props.y + 'px', left: props.x + 'px' }"
     @dragstart="onDragStart"
   >
-    <q-popup-proxy>
+    <q-popup-proxy v-if="!connectMode">
       <q-banner>
         İş Akış Adım
         <q-select
@@ -65,6 +65,7 @@
 import { IDragRef } from 'src/models/IDragRef';
 import { AkisAdim } from 'src/models/models_from_backend/models';
 import { ref, watch } from 'vue';
+import AkisService from 'src/services/AkisService';
 
 const propsAdim = defineProps<{ adim: AkisAdim }>();
 const props = propsAdim.adim;
@@ -72,6 +73,8 @@ const props = propsAdim.adim;
 const emit = defineEmits<{
   (e: 'drag-start', payload: IDragRef): void;
 }>();
+
+const { connectMode } = AkisService();
 
 // --- drag ---
 const onDragStart = (event: DragEvent) => {

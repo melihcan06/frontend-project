@@ -66,8 +66,9 @@ import {
 import { IDragRef } from 'src/models/IDragRef';
 
 const playground = ref<HTMLDivElement | null>(null);
-const akis = ref<AkisDto>();
-const { getAkisByAkisNo, getBagKonum, akisAdimEkle } = AkisService();
+const akis = ref<AkisDto>(); //AkisService e alsak ?
+const { connectMode, getAkisByAkisNo, getBagKonum, akisAdimEkle } =
+  AkisService();
 
 const test = async () => {
   akis.value = await getAkisByAkisNo(1);
@@ -86,7 +87,6 @@ const dragging = ref<IDragRef>({
 });
 
 // --- Connection Mode ---
-const connectMode = ref(false);
 const selectedForConnect = ref<number | null>(null);
 
 const toggleConnectMode = () => {
@@ -105,18 +105,6 @@ const selectConnection = (line: AkisBag) => {
 // --- Delete tuşu ile silme ---
 const handleKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Delete' && selectedConnection.value && akis.value) {
-    /*const { basAdim, sonAdim } = getBagBasSonAdimlar(
-      akis.value,
-      selectedConnection.value
-    );
-    const from = akis.value?.listAkisAdim.find(
-      (b) => b.id === selectedConnection.value?.from
-    );
-    if (from) {
-      from.connections = from.connections.filter(
-        (c) => c !== selectedConnection.value?.to
-      );
-    }*/
     akis.value.listAkisBag = akis.value.listAkisBag.filter(
       (b) => b.id != selectedConnection.value?.id
     );
@@ -145,7 +133,7 @@ const onButtonClick = (btn: AkisAdim) => {
 
 // --- Drag Handlers ---
 const onChildDragStart = (payload: IDragRef) => {
-  dragging.value = {
+  dragging.value = <IDragRef>{
     id: payload.id,
     offsetX: payload.offsetX,
     offsetY: payload.offsetY,
