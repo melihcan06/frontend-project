@@ -62,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import { IDragRef } from 'src/models/IDragRef';
 import { AkisAdim } from 'src/models/models_from_backend/models';
 import { ref, watch } from 'vue';
 
@@ -69,10 +70,7 @@ const propsAdim = defineProps<{ adim: AkisAdim }>();
 const props = propsAdim.adim;
 
 const emit = defineEmits<{
-  (
-    e: 'drag-start',
-    payload: { id: string; offsetX: number; offsetY: number }
-  ): void;
+  (e: 'drag-start', payload: IDragRef): void;
 }>();
 
 // --- drag ---
@@ -88,7 +86,7 @@ const onDragStart = (event: DragEvent) => {
   event.dataTransfer?.setData('offset-x', String(offsetX));
   event.dataTransfer?.setData('offset-y', String(offsetY));
 
-  emit('drag-start', { id: props.id, offsetX, offsetY });
+  emit('drag-start', <IDragRef>{ id: props.id, offsetX, offsetY });
 };
 
 // --- adım state ---

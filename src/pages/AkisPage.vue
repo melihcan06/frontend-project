@@ -10,8 +10,8 @@
       />
     </div>
 
-    <div ref="playground" class="playground" @dragover.prevent>
-      <!-- @drop="onDrop" -->
+    <div ref="playground" class="playground" @dragover.prevent @drop="onDrop">
+      <!--  -->
       <!-- SVG layer -->
       <svg class="connections">
         <line
@@ -46,8 +46,9 @@
         :key="btn.id"
         :adim="btn"
         @click="onButtonClick(btn)"
+        @drag-start="onChildDragStart"
       />
-      <!-- @drag-start="onChildDragStart"
+      <!--
         @update-label="onUpdateLabel" -->
     </div>
   </q-page>
@@ -62,6 +63,7 @@ import {
   AkisBag,
   AkisDto,
 } from 'src/models/models_from_backend/models';
+import { IDragRef } from 'src/models/IDragRef';
 
 const playground = ref<HTMLDivElement | null>(null);
 const akis = ref<AkisDto>();
@@ -78,11 +80,11 @@ const yeniAdimEkle = () => {
 };
 
 // --- Drag State ---
-/*const dragging = ref<{ id: string | null; offsetX: number; offsetY: number }>({
+const dragging = ref<IDragRef>({
   id: null,
   offsetX: 0,
   offsetY: 0,
-});*/
+});
 
 // --- Connection Mode ---
 const connectMode = ref(false);
@@ -132,28 +134,24 @@ const selectConnection = (line: AkisBag) => {
 };*/
 
 const onButtonClick = (btn: AkisAdim) => {
-  console.log(btn);
+  console.log(btn); //TODO
 };
 
 // --- Drag Handlers ---
-/*const onChildDragStart = (payload: {
-  id: string;
-  offsetX: number;
-  offsetY: number;
-}) => {
+const onChildDragStart = (payload: IDragRef) => {
   dragging.value = {
     id: payload.id,
     offsetX: payload.offsetX,
     offsetY: payload.offsetY,
   };
-};*/
+};
 
-/*const onDrop = (event: DragEvent) => {
- if (!playground.value) return;
+const onDrop = (event: DragEvent) => {
+  if (!playground.value) return;
   const rect = playground.value.getBoundingClientRect();
 
   const idStr = event.dataTransfer?.getData('drag-id');
-  const id = idStr ? Number(idStr) : dragging.value.id;
+  const id = idStr ? idStr : dragging.value.id;
   if (id == null) return;
 
   const offsetX =
@@ -167,17 +165,24 @@ const onButtonClick = (btn: AkisAdim) => {
   const btnWidth = 120;
   const btnHeight = 40;
 
-  const idx = buttons.value.findIndex((b) => b.id === id);
+  if (!akis.value) {
+    return;
+  }
+
+  const idx = akis.value.listAkisAdim.findIndex((b) => b.id === id);
   if (idx !== -1) {
-    buttons.value[idx].x = Math.max(0, Math.min(dropX, rect.width - btnWidth));
-    buttons.value[idx].y = Math.max(
+    akis.value.listAkisAdim[idx].x = Math.max(
+      0,
+      Math.min(dropX, rect.width - btnWidth)
+    );
+    akis.value.listAkisAdim[idx].y = Math.max(
       0,
       Math.min(dropY, rect.height - btnHeight)
     );
   }
 
   dragging.value = { id: null, offsetX: 0, offsetY: 0 };
-};*/
+};
 
 // --- Label Update ---
 /*const onUpdateLabel = (payload: { id: number; label: string }) => {
@@ -221,10 +226,15 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleKeydown);
 });
 
+const saved = localStorage.getItem('akis');
+if (saved) {
+  akis.value = JSON.parse(saved);
+}
+
 watch(
-  buttons,
+  akis,
   (val) => {
-    localStorage.setItem('akisButtons', JSON.stringify(val));
+    localStorage.setItem('akis', JSON.stringify(val));
   },
   { deep: true }
 );*/
