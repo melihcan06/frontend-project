@@ -17,6 +17,11 @@ const createAkisAdim = (siradakiAdimNo: number): AkisAdim => {
   return adim;
 };
 
+const createAkisBag = (): AkisBag => {
+  const bag = <AkisBag>{};
+  return bag;
+};
+
 const getSiradakiAdimNo = (adimlar: AkisAdim[]) => {
   const no = adimlar?.length + 1;
   return Number.isNaN(no) ? 1 : no;
@@ -26,6 +31,11 @@ const akisAdimEkle = (akisDto: AkisDto) => {
   const siradakiAdimNo = getSiradakiAdimNo(akisDto.listAkisAdim);
   const yeniAdim = createAkisAdim(siradakiAdimNo);
   akisDto.listAkisAdim.push(yeniAdim);
+};
+
+const akisBagEkle = (akisDto: AkisDto, id1: number, id2: number) => {
+  console.log(id1 + ' ---> ' + id2, akisDto); //sil
+  return createAkisBag();
 };
 
 const getBagBasSonAdimlar = (
@@ -69,6 +79,7 @@ const AkisService = () => {
     getBagBasSonAdimlar,
     getBagKonum,
     akisAdimEkle,
+    akisBagEkle,
   };
 };
 

@@ -67,7 +67,7 @@ import { IDragRef } from 'src/models/IDragRef';
 
 const playground = ref<HTMLDivElement | null>(null);
 const akis = ref<AkisDto>(); //AkisService e alsak ?
-const { connectMode, getAkisByAkisNo, getBagKonum, akisAdimEkle } =
+const { connectMode, getAkisByAkisNo, getBagKonum, akisAdimEkle, akisBagEkle } =
   AkisService();
 
 const test = async () => {
@@ -87,11 +87,11 @@ const dragging = ref<IDragRef>({
 });
 
 // --- Connection Mode ---
-const selectedForConnect = ref<number | null>(null);
+const selectedForConnectAdimNo = ref<number | null>(null);
 
 const toggleConnectMode = () => {
   connectMode.value = !connectMode.value;
-  selectedForConnect.value = null;
+  selectedForConnectAdimNo.value = null;
 };
 
 // --- Seçili Connection ---
@@ -113,22 +113,16 @@ const handleKeydown = (e: KeyboardEvent) => {
 };
 
 // --- Button Click (connection mode) ---
-/*const onButtonClick = (btn: ButtonItem) => {
-  if (!connectMode.value) return;
-
-  if (selectedForConnect.value == null) {
-    selectedForConnect.value = btn.id;
-  } else {
-    const from = buttons.value.find((b) => b.id === selectedForConnect.value);
-    if (from && !from.connections.includes(btn.id) && from.id !== btn.id) {
-      from.connections.push(btn.id);
-    }
-    selectedForConnect.value = null;
-  }
-};*/
-
 const onButtonClick = (btn: AkisAdim) => {
-  console.log(btn); //TODO
+  if (!connectMode.value) return;
+  if (!akis.value) return;
+
+  if (selectedForConnectAdimNo.value == null) {
+    selectedForConnectAdimNo.value = btn.adimNo;
+  } else if (selectedForConnectAdimNo.value != btn.adimNo) {
+    akisBagEkle(akis.value, selectedForConnectAdimNo.value, btn.adimNo);
+    selectedForConnectAdimNo.value = null;
+  }
 };
 
 // --- Drag Handlers ---
