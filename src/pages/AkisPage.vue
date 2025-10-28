@@ -21,7 +21,11 @@
           :y1="getBagKonum(akis, line).y1"
           :x2="getBagKonum(akis, line).x2"
           :y2="getBagKonum(akis, line).y2"
-          :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
+          :stroke="
+            selectedConnection && line.id === selectedConnection?.id
+              ? 'red'
+              : 'black'
+          "
           stroke-width="2"
           marker-end="url(#arrowhead)"
           @click="selectConnection(line)"
@@ -81,7 +85,7 @@ const yeniAdimEkle = () => {
 
 // --- Drag State ---
 const dragging = ref<IDragRef>({
-  id: null,
+  adimNo: -1,
   offsetX: 0,
   offsetY: 0,
 });
@@ -128,19 +132,20 @@ const onButtonClick = (btn: AkisAdim) => {
 // --- Drag Handlers ---
 const onChildDragStart = (payload: IDragRef) => {
   dragging.value = <IDragRef>{
-    id: payload.id,
+    adimNo: payload.adimNo,
     offsetX: payload.offsetX,
     offsetY: payload.offsetY,
   };
 };
 
 const onDrop = (event: DragEvent) => {
+  debugger;
   if (!playground.value) return;
   const rect = playground.value.getBoundingClientRect();
 
-  const idStr = event.dataTransfer?.getData('drag-id');
-  const id = idStr ? idStr : dragging.value.id;
-  if (id == null) return;
+  const idStr = event.dataTransfer?.getData('drag-adimNo');
+  const adimNo = idStr ? Number(idStr) : dragging.value.adimNo;
+  if (adimNo == -1) return;
 
   const offsetX =
     Number(event.dataTransfer?.getData('offset-x')) || dragging.value.offsetX;
@@ -157,7 +162,7 @@ const onDrop = (event: DragEvent) => {
     return;
   }
 
-  const idx = akis.value.listAkisAdim.findIndex((b) => b.id === id);
+  const idx = akis.value.listAkisAdim.findIndex((b) => b.adimNo === adimNo);
   if (idx !== -1) {
     akis.value.listAkisAdim[idx].x = Math.max(
       0,
@@ -169,7 +174,7 @@ const onDrop = (event: DragEvent) => {
     );
   }
 
-  dragging.value = { id: null, offsetX: 0, offsetY: 0 };
+  dragging.value = { adimNo: -1, offsetX: 0, offsetY: 0 };
 };
 
 // --- Label Update ---

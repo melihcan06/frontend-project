@@ -48,8 +48,8 @@ const akisAdimEkle = (akisDto: AkisDto) => {
 };
 
 const akisBagEkle = (akisDto: AkisDto, id1: number, id2: number) => {
-  const bag = createAkisBag(id1, id2, akisDto.aktifVersiyon.id);
-  akisDto.listAkisBag.push(bag);
+  const yeniBag = createAkisBag(id1, id2, akisDto.aktifVersiyon.id);
+  akisDto.listAkisBag.push(yeniBag);
 };
 
 const getBagBasSonAdimlar = (

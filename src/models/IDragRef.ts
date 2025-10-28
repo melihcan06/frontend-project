@@ -1,5 +1,5 @@
 export interface IDragRef {
-  id: string | null;
+  adimNo: number;
   offsetX: number;
   offsetY: number;
 }

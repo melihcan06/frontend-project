@@ -85,11 +85,11 @@ const onDragStart = (event: DragEvent) => {
   const offsetX = event.clientX - rect.left;
   const offsetY = event.clientY - rect.top;
 
-  event.dataTransfer?.setData('drag-id', String(props.id));
+  event.dataTransfer?.setData('drag-adimNo', String(props.adimNo));
   event.dataTransfer?.setData('offset-x', String(offsetX));
   event.dataTransfer?.setData('offset-y', String(offsetY));
 
-  emit('drag-start', <IDragRef>{ id: props.id, offsetX, offsetY });
+  emit('drag-start', <IDragRef>{ adimNo: props.adimNo, offsetX, offsetY });
 };
 
 // --- adım state ---
