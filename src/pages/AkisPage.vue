@@ -139,7 +139,6 @@ const onChildDragStart = (payload: IDragRef) => {
 };
 
 const onDrop = (event: DragEvent) => {
-  debugger;
   if (!playground.value) return;
   const rect = playground.value.getBoundingClientRect();
 
