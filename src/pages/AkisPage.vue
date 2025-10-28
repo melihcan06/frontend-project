@@ -21,13 +21,11 @@
           :y1="getBagKonum(akis, line).y1"
           :x2="getBagKonum(akis, line).x2"
           :y2="getBagKonum(akis, line).y2"
-          stroke="black"
-          marker-end="url(#arrowhead)"
-        />
-        <!-- :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
+          :stroke="line.id === selectedConnection?.id ? 'red' : 'black'"
           stroke-width="2"
           marker-end="url(#arrowhead)"
-          @click="selectConnection(line)" -->
+          @click="selectConnection(line)"
+        />
         <defs>
           <marker
             id="arrowhead"
@@ -59,7 +57,11 @@
 import { ref } from 'vue';
 import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import AkisService from 'src/services/AkisService';
-import { AkisAdim, AkisDto } from 'src/models/models_from_backend/models';
+import {
+  AkisAdim,
+  AkisBag,
+  AkisDto,
+} from 'src/models/models_from_backend/models';
 
 const playground = ref<HTMLDivElement | null>(null);
 const akis = ref<AkisDto>();
@@ -92,15 +94,15 @@ const toggleConnectMode = () => {
 };
 
 // --- Seçili Connection ---
-/*const selectedConnection = ref<ILine | null>(null);
+const selectedConnection = ref<AkisBag | null>(null);
 
-const selectConnection = (line: ILine) => {
+const selectConnection = (line: AkisBag) => {
   selectedConnection.value =
     selectedConnection.value?.id === line.id ? null : line;
 };
 
 // --- Delete tuşu ile silme ---
-const handleKeydown = (e: KeyboardEvent) => {
+/*const handleKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Delete' && selectedConnection.value) {
     const from = buttons.value.find(
       (b) => b.id === selectedConnection.value?.from
