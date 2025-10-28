@@ -8,8 +8,13 @@ import { ref } from 'vue';
 
 const connectMode = ref(false);
 
-const createAkisAdim = (siradakiAdimNo: number): AkisAdim => {
+const createAkisAdim = (
+  siradakiAdimNo: number,
+  akisVersiyonId: string
+): AkisAdim => {
   const adim = <AkisAdim>{
+    status: '1',
+    akisVersiyonId: akisVersiyonId,
     adimNo: siradakiAdimNo,
     x: 40 + (siradakiAdimNo - 1) * 30,
     y: 40 + (siradakiAdimNo - 1) * 30,
@@ -17,8 +22,17 @@ const createAkisAdim = (siradakiAdimNo: number): AkisAdim => {
   return adim;
 };
 
-const createAkisBag = (): AkisBag => {
-  const bag = <AkisBag>{};
+const createAkisBag = (
+  basAdimNo: number,
+  sonAdimNo: number,
+  akisVersiyonId: string
+): AkisBag => {
+  const bag = <AkisBag>{
+    status: '1',
+    akisVersiyonId: akisVersiyonId,
+    basAdimNo: basAdimNo,
+    sonAdimNo: sonAdimNo,
+  };
   return bag;
 };
 
@@ -29,13 +43,13 @@ const getSiradakiAdimNo = (adimlar: AkisAdim[]) => {
 
 const akisAdimEkle = (akisDto: AkisDto) => {
   const siradakiAdimNo = getSiradakiAdimNo(akisDto.listAkisAdim);
-  const yeniAdim = createAkisAdim(siradakiAdimNo);
+  const yeniAdim = createAkisAdim(siradakiAdimNo, akisDto.aktifVersiyon.id);
   akisDto.listAkisAdim.push(yeniAdim);
 };
 
 const akisBagEkle = (akisDto: AkisDto, id1: number, id2: number) => {
-  console.log(id1 + ' ---> ' + id2, akisDto); //sil
-  return createAkisBag();
+  const bag = createAkisBag(id1, id2, akisDto.aktifVersiyon.id);
+  akisDto.listAkisBag.push(bag);
 };
 
 const getBagBasSonAdimlar = (
