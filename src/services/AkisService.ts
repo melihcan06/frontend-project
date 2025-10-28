@@ -25,9 +25,12 @@ const akisAdimEkle = (akisDto: AkisDto) => {
   akisDto.listAkisAdim.push(yeniAdim);
 };
 
-const getBagKonum = (akisDto: AkisDto | null | undefined, akisBag: AkisBag) => {
+const getBagBasSonAdimlar = (
+  akisDto: AkisDto | null | undefined,
+  akisBag: AkisBag
+) => {
   if (akisDto == null || akisDto == undefined) {
-    return { x1: 0, y1: 0, x2: 0, y2: 0 };
+    return { basAdim: <AkisAdim>{}, sonAdim: <AkisAdim>{} };
   }
   const basAdim = akisDto.listAkisAdim.find(
     (aa) => aa.adimNo == akisBag.basAdimNo
@@ -35,6 +38,14 @@ const getBagKonum = (akisDto: AkisDto | null | undefined, akisBag: AkisBag) => {
   const sonAdim = akisDto.listAkisAdim.find(
     (aa) => aa.adimNo == akisBag.sonAdimNo
   );
+  return { basAdim: basAdim, sonAdim: sonAdim };
+};
+
+const getBagKonum = (akisDto: AkisDto | null | undefined, akisBag: AkisBag) => {
+  if (akisDto == null || akisDto == undefined) {
+    return { x1: 0, y1: 0, x2: 0, y2: 0 };
+  }
+  const { basAdim, sonAdim } = getBagBasSonAdimlar(akisDto, akisBag);
   return { x1: basAdim?.x, y1: basAdim?.y, x2: sonAdim?.x, y2: sonAdim?.y };
 };
 
@@ -51,6 +62,7 @@ const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto> => {
 const AkisService = () => {
   return {
     getAkisByAkisNo,
+    getBagBasSonAdimlar,
     getBagKonum,
     akisAdimEkle,
   };

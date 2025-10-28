@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import AkisService from 'src/services/AkisService';
 import {
@@ -71,7 +71,6 @@ const { getAkisByAkisNo, getBagKonum, akisAdimEkle } = AkisService();
 
 const test = async () => {
   akis.value = await getAkisByAkisNo(1);
-  console.log(akis.value);
 };
 
 // --- Add Button ---
@@ -104,19 +103,26 @@ const selectConnection = (line: AkisBag) => {
 };
 
 // --- Delete tuşu ile silme ---
-/*const handleKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Delete' && selectedConnection.value) {
-    const from = buttons.value.find(
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Delete' && selectedConnection.value && akis.value) {
+    /*const { basAdim, sonAdim } = getBagBasSonAdimlar(
+      akis.value,
+      selectedConnection.value
+    );
+    const from = akis.value?.listAkisAdim.find(
       (b) => b.id === selectedConnection.value?.from
     );
     if (from) {
       from.connections = from.connections.filter(
         (c) => c !== selectedConnection.value?.to
       );
-    }
+    }*/
+    akis.value.listAkisBag = akis.value.listAkisBag.filter(
+      (b) => b.id != selectedConnection.value?.id
+    );
     selectedConnection.value = null;
   }
-};*/
+};
 
 // --- Button Click (connection mode) ---
 /*const onButtonClick = (btn: ButtonItem) => {
@@ -218,7 +224,7 @@ const onDrop = (event: DragEvent) => {
   return arr;
 });*/
 
-/*onMounted(() => {
+onMounted(() => {
   window.addEventListener('keydown', handleKeydown);
 });
 
@@ -226,7 +232,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleKeydown);
 });
 
-const saved = localStorage.getItem('akis');
+/*const saved = localStorage.getItem('akis');
 if (saved) {
   akis.value = JSON.parse(saved);
 }
