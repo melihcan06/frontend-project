@@ -4,10 +4,7 @@ import {
   AkisDto,
 } from 'src/models/models_from_backend/models';
 import api from './ApiService';
-import { ref } from 'vue';
 import Consts from 'src/models/Consts';
-
-const connectMode = ref(false);
 
 const createAkisDto = (): AkisDto => {
   const akis = <AkisDto>{
@@ -120,7 +117,6 @@ const getAkisIslem = (akis: AkisDto) => {
 
 const AkisService = () => {
   return {
-    connectMode,
     createAkisDto,
     getAkisByAkisNo,
     saveAkis,
