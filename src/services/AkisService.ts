@@ -5,6 +5,7 @@ import {
 } from 'src/models/models_from_backend/models';
 import api from './ApiService';
 import { ref } from 'vue';
+import Consts from 'src/models/Consts';
 
 const connectMode = ref(false);
 
@@ -102,6 +103,21 @@ const saveAkis = async (akis: AkisDto): Promise<AkisDto> => {
   return response;
 };
 
+const getAkisIslem = (akis: AkisDto) => {
+  if (
+    akis == null ||
+    akis == undefined ||
+    akis.akisTanim == null ||
+    akis.akisTanim == undefined
+  ) {
+    return Consts.AkisIslem.YENI_AKIS;
+  } else if (akis.akisVersiyon == null || akis.akisVersiyon == undefined) {
+    return Consts.AkisIslem.YENI_VERSIYON;
+  } else {
+    return Consts.AkisIslem.AKIS_VERSIYON_GUNCELLEME;
+  }
+};
+
 const AkisService = () => {
   return {
     connectMode,
@@ -112,6 +128,7 @@ const AkisService = () => {
     getBagKonum,
     akisAdimEkle,
     akisBagEkle,
+    getAkisIslem,
   };
 };
 
