@@ -64,6 +64,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import AkisAdimComp from 'src/components/AkisAdimComp.vue';
 import AkisService from 'src/services/AkisService';
+import AkisPageService from 'src/services/AkisPageService';
 import {
   AkisAdim,
   AkisBag,
@@ -72,7 +73,6 @@ import {
 import { IDragRef } from 'src/models/IDragRef';
 
 const {
-  connectMode,
   createAkisDto,
   getAkisByAkisNo,
   saveAkis,
@@ -80,6 +80,7 @@ const {
   akisAdimEkle,
   akisBagEkle,
 } = AkisService();
+const { connectMode } = AkisPageService();
 const playground = ref<HTMLDivElement | null>(null);
 const akis = ref<AkisDto>(); //AkisService e mi alsak ?
 akis.value = createAkisDto();
