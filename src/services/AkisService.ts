@@ -97,11 +97,20 @@ const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto> => {
   return response;
 };
 
+const saveAkis = async (akis: AkisDto): Promise<AkisDto> => {
+  let response = <AkisDto>{};
+  await api.post('/akis/saveAkis', akis).then((resp) => {
+    response = resp?.data;
+  });
+  return response;
+};
+
 const AkisService = () => {
   return {
     connectMode,
     createAkisDto,
     getAkisByAkisNo,
+    saveAkis,
     getBagBasSonAdimlar,
     getBagKonum,
     akisAdimEkle,

@@ -9,6 +9,7 @@
         :label="connectMode ? 'Bağlantı Modu: Açık' : 'Bağlantı Modu: Kapalı'"
         @click="toggleConnectMode"
       />
+      <q-btn label="Kaydet" color="primary" @click="akisKaydet" />
     </div>
 
     <div ref="playground" class="playground" @dragover.prevent @drop="onDrop">
@@ -74,6 +75,7 @@ const {
   connectMode,
   createAkisDto,
   getAkisByAkisNo,
+  saveAkis,
   getBagKonum,
   akisAdimEkle,
   akisBagEkle,
@@ -92,7 +94,15 @@ const temizleTest = () => {
 
 // --- Add Button ---
 const yeniAdimEkle = () => {
-  akisAdimEkle(akis.value == undefined ? <AkisDto>{} : akis.value);
+  if (akis.value) {
+    akisAdimEkle(akis.value);
+  }
+};
+
+const akisKaydet = () => {
+  if (akis.value) {
+    saveAkis(akis.value).then((resp) => (akis.value = resp));
+  }
 };
 
 // --- Drag State ---
@@ -188,6 +198,27 @@ const onDrop = (event: DragEvent) => {
   dragging.value = { adimNo: -1, offsetX: 0, offsetY: 0 };
 };
 
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
+
+/*const saved = localStorage.getItem('akis');
+if (saved) {
+  akis.value = JSON.parse(saved);
+}
+
+watch(
+  akis,
+  (val) => {
+    localStorage.setItem('akis', JSON.stringify(val));
+  },
+  { deep: true }
+);*/
+
 // --- Label Update ---
 /*const onUpdateLabel = (payload: { id: number; label: string }) => {
   const idx = buttons.value.findIndex((b) => b.id === payload.id);
@@ -221,27 +252,6 @@ const onDrop = (event: DragEvent) => {
   });
   return arr;
 });*/
-
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('keydown', handleKeydown);
-});
-
-/*const saved = localStorage.getItem('akis');
-if (saved) {
-  akis.value = JSON.parse(saved);
-}
-
-watch(
-  akis,
-  (val) => {
-    localStorage.setItem('akis', JSON.stringify(val));
-  },
-  { deep: true }
-);*/
 </script>
 
 <style scoped>
