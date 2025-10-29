@@ -50,17 +50,14 @@ const getSiradakiAdimNo = (adimlar: AkisAdim[]) => {
 };
 
 const akisAdimEkle = (akisDto: AkisDto) => {
-  if (!akisDto.listAkisAdim) {
-    return;
-  }
   const siradakiAdimNo = getSiradakiAdimNo(akisDto.listAkisAdim);
-  const yeniAdim = createAkisAdim(siradakiAdimNo, akisDto.aktifVersiyon?.id);
-  akisDto.listAkisAdim.push(yeniAdim);
+  const yeniAdim = createAkisAdim(siradakiAdimNo, akisDto.akisVersiyon?.id);
+  akisDto.listAkisAdim?.push(yeniAdim);
 };
 
 const akisBagEkle = (akisDto: AkisDto, id1: number, id2: number) => {
-  const yeniBag = createAkisBag(id1, id2, akisDto.aktifVersiyon.id);
-  akisDto.listAkisBag.push(yeniBag);
+  const yeniBag = createAkisBag(id1, id2, akisDto.akisVersiyon?.id);
+  akisDto.listAkisBag?.push(yeniBag);
 };
 
 const getBagBasSonAdimlar = (

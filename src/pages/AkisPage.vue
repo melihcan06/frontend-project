@@ -84,6 +84,23 @@ const playground = ref<HTMLDivElement | null>(null);
 const akis = ref<AkisDto>(); //AkisService e alsak ?
 akis.value = createAkisDto();
 
+const test2 = () => {
+  if (akis.value == null || akis.value == undefined) {
+    return '-1';
+  } else if (
+    akis.value.akisTanim == null ||
+    akis.value.akisTanim == undefined
+  ) {
+    return '0';
+  } else if (
+    akis.value.akisVersiyon == null ||
+    akis.value.akisVersiyon == undefined
+  ) {
+    return '1';
+  }
+};
+test2();
+
 const test = async () => {
   akis.value = await getAkisByAkisNo(1);
 };
