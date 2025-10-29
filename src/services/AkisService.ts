@@ -8,6 +8,14 @@ import { ref } from 'vue';
 
 const connectMode = ref(false);
 
+const createAkisDto = (): AkisDto => {
+  const akis = <AkisDto>{
+    listAkisAdim: <AkisAdim[]>[],
+    listAkisBag: <AkisBag[]>[],
+  };
+  return akis;
+};
+
 const createAkisAdim = (
   siradakiAdimNo: number,
   akisVersiyonId: string
@@ -42,8 +50,11 @@ const getSiradakiAdimNo = (adimlar: AkisAdim[]) => {
 };
 
 const akisAdimEkle = (akisDto: AkisDto) => {
+  if (!akisDto.listAkisAdim) {
+    return;
+  }
   const siradakiAdimNo = getSiradakiAdimNo(akisDto.listAkisAdim);
-  const yeniAdim = createAkisAdim(siradakiAdimNo, akisDto.aktifVersiyon.id);
+  const yeniAdim = createAkisAdim(siradakiAdimNo, akisDto.aktifVersiyon?.id);
   akisDto.listAkisAdim.push(yeniAdim);
 };
 
@@ -89,6 +100,7 @@ const getAkisByAkisNo = async (akisNumber: number): Promise<AkisDto> => {
 const AkisService = () => {
   return {
     connectMode,
+    createAkisDto,
     getAkisByAkisNo,
     getBagBasSonAdimlar,
     getBagKonum,

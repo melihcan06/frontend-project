@@ -2,7 +2,8 @@
   <q-page padding>
     <div class="q-mb-md row q-gutter-sm">
       <q-btn label="TEST" color="secondary" @click="test" />
-      <q-btn label="Yeni Adım Ekle" color="secondary" @click="yeniAdimEkle()" />
+      <q-btn label="Temizle TEST" color="secondary" @click="temizleTest" />
+      <q-btn label="Yeni Adım Ekle" color="primary" @click="yeniAdimEkle" />
       <q-btn
         :color="connectMode ? 'negative' : 'primary'"
         :label="connectMode ? 'Bağlantı Modu: Açık' : 'Bağlantı Modu: Kapalı'"
@@ -69,13 +70,24 @@ import {
 } from 'src/models/models_from_backend/models';
 import { IDragRef } from 'src/models/IDragRef';
 
+const {
+  connectMode,
+  createAkisDto,
+  getAkisByAkisNo,
+  getBagKonum,
+  akisAdimEkle,
+  akisBagEkle,
+} = AkisService();
 const playground = ref<HTMLDivElement | null>(null);
 const akis = ref<AkisDto>(); //AkisService e alsak ?
-const { connectMode, getAkisByAkisNo, getBagKonum, akisAdimEkle, akisBagEkle } =
-  AkisService();
+akis.value = createAkisDto();
 
 const test = async () => {
   akis.value = await getAkisByAkisNo(1);
+};
+
+const temizleTest = () => {
+  akis.value = createAkisDto();
 };
 
 // --- Add Button ---
