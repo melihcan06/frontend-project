@@ -3,6 +3,11 @@
     <div class="q-mb-md row q-gutter-sm">
       <q-btn label="TEST" color="secondary" @click="test" />
       <q-btn label="Temizle TEST" color="secondary" @click="temizleTest" />
+      <q-btn
+        label="Yeni Versiyon Kaydet TEST"
+        color="secondary"
+        @click="akisKaydetTest"
+      />
       <q-btn label="Yeni Adım Ekle" color="primary" @click="yeniAdimEkle" />
       <q-btn
         :color="connectMode ? 'negative' : 'primary'"
@@ -69,6 +74,7 @@ import {
   AkisAdim,
   AkisBag,
   AkisDto,
+  AkisVersiyon,
 } from 'src/models/models_from_backend/models';
 import { IDragRef } from 'src/models/IDragRef';
 
@@ -91,6 +97,13 @@ const test = async () => {
 
 const temizleTest = () => {
   akis.value = createAkisDto();
+};
+
+const akisKaydetTest = () => {
+  if (akis.value) {
+    akis.value.akisVersiyon = <AkisVersiyon>{};
+  }
+  akisKaydet();
 };
 
 // --- Add Button ---
