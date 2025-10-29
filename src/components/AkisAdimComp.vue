@@ -65,7 +65,7 @@
 import { IDragRef } from 'src/models/IDragRef';
 import { AkisAdim } from 'src/models/models_from_backend/models';
 import { ref, watch } from 'vue';
-import AkisService from 'src/services/AkisService';
+import AkisPageService from 'src/services/AkisPageService';
 
 const propsAdim = defineProps<{ adim: AkisAdim }>();
 const props = propsAdim.adim;
@@ -74,7 +74,7 @@ const emit = defineEmits<{
   (e: 'drag-start', payload: IDragRef): void;
 }>();
 
-const { connectMode } = AkisService();
+const { connectMode } = AkisPageService();
 
 // --- drag ---
 const onDragStart = (event: DragEvent) => {
